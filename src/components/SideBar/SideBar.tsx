@@ -6,11 +6,13 @@ export default function SideBar() {
         <div className={styles.main__sidebar}>
             <div className={styles.sidebar__personal}>
               <p className={styles.sidebar__personalName}></p>
+              <Link href={'/SignIn'}>
               <div className={styles.sidebar__icon}>
                 <svg>
                   <use xlinkHref="/icon/sprite.svg#logout"></use>
                 </svg>
               </div>
+              </Link>
             </div>
             <div className={styles.sidebar__block}>
               <div className={styles.sidebar__list}>

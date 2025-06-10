@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from './nav.module.css';
+import styles from './navigation.module.css';
 import Link from 'next/link';
 export default function Nav() {
     return (
@@ -33,7 +33,7 @@ export default function Nav() {
                   </Link>
                 </li>
                 <li className={styles.menu__item}>
-                  <Link href="../signin.html" className={styles.menu__link}>
+                  <Link href="/SignIn" className={styles.menu__link}>
                     Выйти
                   </Link>
                 </li>
