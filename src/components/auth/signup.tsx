@@ -34,9 +34,9 @@ export default function SignUp() {
               />
               <div className={styles.errorContainer}></div>
               <Link href={'/SignIn'}>
-              <button className={styles.modal__btnSignupEnt}>
-                Зарегистрироваться
-              </button>
+                <button className={styles.modal__btnSignupEnt}>
+                  Зарегистрироваться
+                </button>
               </Link>
             </form>
           </div>

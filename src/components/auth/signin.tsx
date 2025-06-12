@@ -28,7 +28,7 @@ export default function Signin() {
               />
               <div className={styles.errorContainer}>{/*Блок для ошибок*/}</div>
               <Link href={'/'}>
-              <button className={styles.modal__btnEnter}>Войти</button>
+                <button className={styles.modal__btnEnter}>Войти</button>
               </Link>
               <Link href={'/SignUp'} className={styles.modal__btnSignup}>
                 Зарегистрироваться

@@ -25,12 +25,19 @@ export default function Bar() {
                   <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                 </svg>
               </div>
-              <div className={classNames(styles.player__btnRepeat, styles.btnIcon)}>
+              <div
+                className={classNames(styles.player__btnRepeat, styles.btnIcon)}
+              >
                 <svg className={styles.player__btnRepeatSvg}>
                   <use xlinkHref="/icon/sprite.svg#icon-repeat"></use>
                 </svg>
               </div>
-              <div className={classNames(styles.player__btnShuffle, styles.btnIcon)}>
+              <div
+                className={classNames(
+                  styles.player__btnShuffle,
+                  styles.btnIcon,
+                )}
+              >
                 <svg className={styles.player__btnShuffleSvg}>
                   <use xlinkHref="/icon/sprite.svg#icon-shuffle"></use>
                 </svg>
@@ -58,14 +65,20 @@ export default function Bar() {
 
               <div className={styles.trackPlay__dislike}>
                 <div
-                  className={classNames(styles.player__btnShuffle, styles.btnIcon)}
+                  className={classNames(
+                    styles.player__btnShuffle,
+                    styles.btnIcon,
+                  )}
                 >
                   <svg className={styles.trackPlay__likeSvg}>
                     <use xlinkHref="/icon/sprite.svg#icon-like"></use>
                   </svg>
                 </div>
                 <div
-                  className={classNames(styles.trackPlay__dislike, styles.btnIcon)}
+                  className={classNames(
+                    styles.trackPlay__dislike,
+                    styles.btnIcon,
+                  )}
                 >
                   <svg className={styles.trackPlay__dislikeSvg}>
                     <use xlinkHref="/icon/sprite.svg#icon-dislike"></use>
@@ -83,7 +96,10 @@ export default function Bar() {
               </div>
               <div className={classNames(styles.volume__progress, styles.btn)}>
                 <input
-                  className={classNames(styles.volume__progressLine, styles.btn)}
+                  className={classNames(
+                    styles.volume__progressLine,
+                    styles.btn,
+                  )}
                   type="range"
                   name="range"
                 />
