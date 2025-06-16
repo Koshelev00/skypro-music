@@ -1,4 +1,4 @@
-import styles from './singnin.module.css';
+import styles from './signin.module.css';
 import classNames from 'classnames';
 import Link from 'next/link';
 
