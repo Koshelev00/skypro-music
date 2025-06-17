@@ -1,25 +1,37 @@
+'use client'
 import Image from 'next/image';
 import styles from './navigation.module.css';
 import Link from 'next/link';
-export default function Nav() {
+import { useState } from 'react';
+import BurgerButton from '@/components/BurgerButton/BurgerButton';
+
+export default function Navigation() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
   return (
     <nav className={styles.main__nav}>
       <div className={styles.nav__logo}>
-        {/*TODO: img –> Image*/}
+         {/*TODO: img –> Image*/}
         <Image
-          width={250}
-          height={170}
+           width={113}
+          height={17}
           className={styles.logo__image}
           src="/logo.png"
           alt={'logo'}
         />
       </div>
-      <div className={styles.nav__burger}>
-        <span className={styles.burger__line}></span>
-        <span className={styles.burger__line}></span>
-        <span className={styles.burger__line}></span>
-      </div>
-      <div className={styles.nav__menu}>
+
+      <BurgerButton isOpen={menuOpen} toggle={toggleMenu} />
+
+      <div
+        className={`${styles.nav__menu} ${
+          menuOpen ? styles.nav__menu_open : ''
+        }`}
+      >
         <ul className={styles.menu__list}>
           <li className={styles.menu__item}>
             {/*TODO: a -> Link*/}
@@ -33,7 +45,7 @@ export default function Nav() {
             </Link>
           </li>
           <li className={styles.menu__item}>
-            <Link href="/SignIn" className={styles.menu__link}>
+           <Link href="/SignIn" className={styles.menu__link}>
               Выйти
             </Link>
           </li>
