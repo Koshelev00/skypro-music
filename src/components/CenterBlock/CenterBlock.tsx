@@ -1,6 +1,6 @@
 
 'use client';
-import { useState, useRef } from 'react';
+import { useState,useEffect, useRef } from 'react';
 import styles from './ceneterBlock.module.css';
 import classNames from 'classnames';
 import Search from '../Search/Search';
@@ -14,32 +14,28 @@ import { getUniqueValueByKey } from '@/utils/helper';
 export default function Centerblock() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedValue, setSelectedValue] = useState<string>('');
-  const [position, setPosition] = useState<{ top: number; left: number }>({
-    top: 0,
-    left: 0,
-  });
-  const [values, setValues] = useState<string[]>([]);
-
-  const handleFilterClick = (
-    label: string,
-    buttonRef: HTMLDivElement | null,
-  ) => {
-    if (buttonRef) {
-      const rect = buttonRef.getBoundingClientRect();
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef<HTMLDivElement | null>(null);
+   const [values, setValues] = useState<string[]>([]);
+ 
+  const updatePosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
       setPosition({
         top: rect.bottom + window.scrollY + 8,
         left: rect.left + window.scrollX - 38,
       });
     }
+  };
 
-   
+   const handleFilterClick = (label: string, ref: HTMLDivElement | null) => {
     if (activeFilter === label) {
       setActiveFilter(null);
       return;
     }
-
-  
-    if (label === 'исполнителю') {
+    if (ref) buttonRef.current = ref;
+    updatePosition();
+     if (label === 'исполнителю') {
       setValues(getUniqueValueByKey(data, 'author'));
     } else if (label === 'жанру') {
       setValues(getUniqueValueByKey(data, 'genre'));
@@ -48,12 +44,29 @@ export default function Centerblock() {
     }
     setActiveFilter(label);
   };
-
   const handleSelect = (value: string) => {
     setSelectedValue(value);
     setActiveFilter(null);
-  };
+  }
+  
+    useEffect(() => {
+    if (!activeFilter) return;
 
+    // Обновлять позицию при скролле, ресайзе и zoom (zoom влияет на getBoundingClientRect)
+    const onScrollOrResize = () => {
+      updatePosition();
+    };
+
+    window.addEventListener('scroll', onScrollOrResize);
+    window.addEventListener('resize', onScrollOrResize);
+
+    return () => {
+      window.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', onScrollOrResize);
+    };
+  }, [activeFilter]);
+
+  
   return (
     <div className={styles.centerblock}>
       <Search />
@@ -103,7 +116,7 @@ export default function Centerblock() {
           </div>
           <div className={classNames(styles.playlistTitle__col, styles.col04)}>
             <svg className={styles.playlistTitle__svg}>
-              <use xlinkHref="/img/icon/sprite.svg#icon-watch"></use>
+              <use xlinkHref="/icon/sprite.svg#icon-watch"></use>
             </svg>
           </div>
         </div>

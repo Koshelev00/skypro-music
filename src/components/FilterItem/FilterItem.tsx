@@ -27,8 +27,8 @@ export default function FilterItem({ label, isActive, onClick,count }: FilterIte
         onClick={handleClick}
       >
         {label}  
-        {typeof count === 'number' && (
-      <div className={styles.count}>{count}</div>)}
+        {/* {typeof count === 'number' && (
+      <div className={styles.count}>{count}</div>)} */}
       </div>
    
     </div>
