@@ -19,14 +19,16 @@ export default function Centerblock() {
    const [values, setValues] = useState<string[]>([]);
  
   const updatePosition = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX - 38,
-      });
-    }
-  };
+  if (buttonRef.current) {
+    const rect = buttonRef.current.getBoundingClientRect();
+    const zoomLevel = window.visualViewport?.scale || 1;
+    
+    setPosition({
+      top: rect.bottom + window.scrollY + 8,
+      left: rect.left + window.scrollX - 38,
+    });
+  }
+};
 
    const handleFilterClick = (label: string, ref: HTMLDivElement | null) => {
     if (activeFilter === label) {
@@ -49,22 +51,30 @@ export default function Centerblock() {
     setActiveFilter(null);
   }
   
-    useEffect(() => {
-    if (!activeFilter) return;
+   useEffect(() => {
+  if (!activeFilter) return;
 
-    // Обновлять позицию при скролле, ресайзе и zoom (zoom влияет на getBoundingClientRect)
-    const onScrollOrResize = () => {
-      updatePosition();
-    };
+  const onScrollOrResizeOrZoom = () => {
+    updatePosition();
+  };
 
-    window.addEventListener('scroll', onScrollOrResize);
-    window.addEventListener('resize', onScrollOrResize);
+  window.addEventListener('scroll', onScrollOrResizeOrZoom);
+  window.addEventListener('resize', onScrollOrResizeOrZoom);
+  
+  // Добавляем обработчик изменения масштаба
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', onScrollOrResizeOrZoom);
+  }
 
-    return () => {
-      window.removeEventListener('scroll', onScrollOrResize);
-      window.removeEventListener('resize', onScrollOrResize);
-    };
-  }, [activeFilter]);
+  return () => {
+    window.removeEventListener('scroll', onScrollOrResizeOrZoom);
+    window.removeEventListener('resize', onScrollOrResizeOrZoom);
+    
+    if (window.visualViewport) {
+      window.visualViewport.removeEventListener('resize', onScrollOrResizeOrZoom);
+    }
+  };
+}, [activeFilter]);
 
   
   return (

@@ -21,6 +21,7 @@ export default function FilterModal({
     <div
       className={styles.modal}
       style={{
+        position: 'fixed',
         top: position.top,
         left: position.left,
       }}
