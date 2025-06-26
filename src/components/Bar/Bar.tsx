@@ -2,24 +2,28 @@
 import styles from './bar.module.css';
 import Link from 'next/link';
 import classNames from 'classnames';
-import { useAppSelector } from '@/store/store';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useRef } from 'react';
 
-import { trackSliceReducer } from '@/store/features/trackSlice';
+import { setIsPlay, trackSliceReducer } from '@/store/features/trackSlice';
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isPlay = useAppSelector((state) => state.tracks.isPlay);
+  const dispatch = useAppDispatch();
 
   if (!currentTrack) return <></>;
+  
   const playTrack = () => {
     if (audioRef.current) {
       audioRef.current.play();
+      dispatch(setIsPlay(true));
     }
   };
   const pauseTrack = () => {
     if (audioRef.current) {
       audioRef.current.pause();
+      dispatch(setIsPlay(false));
     }
   };
   return (
@@ -37,7 +41,7 @@ export default function Bar() {
               </div>
               <div
                 className={classNames(styles.player__btnPlay, styles.btn)}
-                onClick= {isPlay ? playTrack : pauseTrack}
+                onClick={isPlay ? playTrack : pauseTrack}
               >
                 <svg className={styles.player__btnPlaySvg}>
                   <use xlinkHref="/icon/sprite.svg#icon-play"></use>
@@ -76,12 +80,12 @@ export default function Bar() {
                 </div>
                 <div className={styles.trackPlay__author}>
                   <Link className={styles.trackPlay__authorLink} href="">
-                   {currentTrack?.name}
+                    {currentTrack?.name}
                   </Link>
                 </div>
                 <div className={styles.trackPlay__album}>
                   <Link className={styles.trackPlay__albumLink} href="">
-                     {currentTrack?.author}
+                    {currentTrack?.author}
                   </Link>
                 </div>
               </div>

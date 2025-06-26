@@ -12,14 +12,17 @@ const initialState: initialStateType = {
 };
 
 const trackSlice = createSlice({
-  name: 'tracks',  
-  initialState,  
+  name: 'tracks',
+  initialState,
   reducers: {
     setCurrentTrack: (state, action: PayloadAction<TrackType>) => {
-    state.currentTrack = action.payload;    
-    },  
+      state.currentTrack = action.payload;
+    },
+    setIsPlay: (state, action: PayloadAction<boolean>) => {
+      state.isPlay = action.payload;
+    },
   },
 });
 
-export const { setCurrentTrack } = trackSlice.actions;
+export const { setCurrentTrack, setIsPlay } = trackSlice.actions;
 export const trackSliceReducer = trackSlice.reducer;

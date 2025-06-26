@@ -2,7 +2,7 @@ import styles from './track.module.css';
 import Link from 'next/link';
 import { formatTime } from '@/utils/helper';
 import { TrackType } from '../../app/sharedTypes/sharedTypes';
-import { useAppDispatch } from '@/store/store';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 import { setCurrentTrack } from '@/store/features/trackSlice';
 
 type TrackProps = {
@@ -10,6 +10,7 @@ type TrackProps = {
 };
 export default function Track({ track }: TrackProps) {
   const dispatch = useAppDispatch();
+  const isPlay = useAppSelector((state) => state.tracks.isPlay)
   const onClickTrack = () => {
     dispatch(setCurrentTrack(track));
   };
