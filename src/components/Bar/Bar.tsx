@@ -15,9 +15,11 @@ export default function Bar() {
   if (!currentTrack) return <></>;
   
   const playTrack = () => {
+    
     if (audioRef.current) {
       audioRef.current.play();
       dispatch(setIsPlay(true));
+     
     }
   };
   const pauseTrack = () => {
@@ -28,7 +30,7 @@ export default function Bar() {
   };
   return (
     <div className={styles.bar}>
-      <audio ref={audioRef} controls src={currentTrack?.track_file}></audio>
+      <audio ref={audioRef}  controls src={currentTrack?.track_file}></audio>
       <div className={styles.bar__content}>
         <div className={styles.bar__playerProgress}></div>
         <div className={styles.bar__playerBlock}>
@@ -41,10 +43,11 @@ export default function Bar() {
               </div>
               <div
                 className={classNames(styles.player__btnPlay, styles.btn)}
-                onClick={isPlay ? playTrack : pauseTrack}
+              
+                onClick={isPlay ? pauseTrack : playTrack}
               >
                 <svg className={styles.player__btnPlaySvg}>
-                  <use xlinkHref="/icon/sprite.svg#icon-play"></use>
+                  <use xlinkHref={isPlay ? "/icon/sprite.svg#icon-pause" : "/icon/sprite.svg#icon-play"}></use>
                 </svg>
               </div>
               <div className={styles.player__btnNext}>
