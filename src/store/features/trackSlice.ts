@@ -3,10 +3,12 @@ import { TrackType } from '../../app/sharedTypes/sharedTypes';
 
 type initialStateType = {
   currentTrack: TrackType | null;
+  isPlay: boolean;
 };
 
 const initialState: initialStateType = {
   currentTrack: null,
+  isPlay: false,
 };
 
 const trackSlice = createSlice({
