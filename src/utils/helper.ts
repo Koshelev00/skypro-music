@@ -1,4 +1,5 @@
 import { TrackType } from '../app/sharedTypes/sharedTypes';
+import { current } from '@reduxjs/toolkit';
 
 export function formatTime(time: number) {
   const minutes = Math.floor(time / 60);
@@ -7,11 +8,19 @@ export function formatTime(time: number) {
   return `${minutes}:${outputSeconds}`;
 }
 
+export const getTimePanel = (
+  currentTime: number,
+  totalTime: number | undefined,
+) => {
+  if (totalTime) {
+    return `${formatTime(currentTime)} / ${formatTime(totalTime)}`;
+  }
+};
+
 export function getUniqueValueByKey(
   arr: TrackType[],
   key: keyof TrackType,
 ): string[] {
-  // Use Set for storing unique values
   const uniqueValues = new Set<string>();
   arr.forEach((item) => {
     const value = item[key];
@@ -22,7 +31,7 @@ export function getUniqueValueByKey(
         }
       });
     } else if (typeof value === 'string') {
-        uniqueValues.add(value);
+      uniqueValues.add(value);
     }
   });
 
