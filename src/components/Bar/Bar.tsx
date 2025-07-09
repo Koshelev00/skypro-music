@@ -10,6 +10,7 @@ import {
   setPrevTrack,
   toggleShuffle,
 } from '@/store/features/trackSlice';
+import { getTimePanel } from '../../utils/helper';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
 export default function Bar() {
@@ -50,7 +51,45 @@ export default function Bar() {
       dispatch(setIsPlay(false));
     }
   };
- 
+  const onToggleLoop = () => {
+    setIsLoop(!isLoop);
+  };
+
+  const onTimeUpdate = () => {
+    if (audioRef.current) {
+      setTimeValue(audioRef.current.currentTime);
+    }
+  };
+  const onLoadedMetaData = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      dispatch(setIsPlay(true));
+      setIsLoadedTrack(true);
+    }
+  };
+  const onVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(e.target.value));
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+    }
+  };
+  const onProgressChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (audioRef.current) {
+      const inputTime = Number(e.target.value);
+      setTimeValue(inputTime);
+      audioRef.current.currentTime = inputTime;
+    }
+  };
+  const onNextTrack = () => {
+    dispatch(setNextTrack());
+  };
+  const onPrevTrack = () => {
+    dispatch(setPrevTrack());
+  };
+  const onToggleShuffle = () => {
+    setIsShuffle(!isShuffle);
+    dispatch(toggleShuffle());
+  };
   const notFunction= () => {
       alert('Еще не реализовано')
   }
@@ -62,9 +101,19 @@ export default function Bar() {
         className={styles.audio}
         ref={audioRef}
         src={currentTrack?.track_file}
-        preload="auto"        
+        preload="auto"
+        loop={isLoop}
+        onTimeUpdate={onTimeUpdate}
+        onLoadedMetadata={onLoadedMetaData}
       ></audio>
       <div className={styles.bar__content}>
+        <ProgressBar
+          max={audioRef.current?.duration || 0}
+          step={0.1}
+          readOnly={!isLoadedTrack}
+          value={timeValue}
+          onChange={onProgressChange}
+        />
         <div className={styles.bar__playerBlock}>
           <div className={styles.bar__player}>
             <div className={styles.player__controls}>
@@ -179,7 +228,7 @@ export default function Bar() {
                   )}
                   type="range"
                   name="range"
-                 
+                  onChange={onVolumeChange}
                 />
               </div>
             </div>
