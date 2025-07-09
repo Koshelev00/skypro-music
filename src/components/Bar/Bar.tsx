@@ -10,7 +10,6 @@ import {
   setPrevTrack,
   toggleShuffle,
 } from '@/store/features/trackSlice';
-import { getTimePanel } from '../../utils/helper';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
 export default function Bar() {
@@ -90,16 +89,16 @@ export default function Bar() {
     setIsShuffle(!isShuffle);
     dispatch(toggleShuffle());
   };
+  const notFunction= () => {
+      alert('Еще не реализовано')
+  }
 
-  const alertDev = () => {
-    alert('Данный функционал в разработке');
-  };
+  
   return (
     <div className={styles.bar}>
       <audio
         className={styles.audio}
         ref={audioRef}
-        controls
         src={currentTrack?.track_file}
         preload="auto"
         loop={isLoop}
@@ -117,7 +116,7 @@ export default function Bar() {
         <div className={styles.bar__playerBlock}>
           <div className={styles.bar__player}>
             <div className={styles.player__controls}>
-              <div className={styles.player__btnPrev} onClick={onPrevTrack}>
+              <div className={styles.player__btnPrev} onClick={ notFunction}>
                 <svg className={styles.player__btnPrevSvg}>
                   <use xlinkHref="/icon/sprite.svg#icon-prev"></use>
                 </svg>
@@ -136,14 +135,14 @@ export default function Bar() {
                   ></use>
                 </svg>
               </div>
-              <div className={styles.player__btnNext} onClick={onNextTrack}>
+              <div className={styles.player__btnNext} onClick={ notFunction}>
                 <svg className={styles.player__btnNextSvg}>
                   <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                 </svg>
               </div>
               <div
                 className={classNames(styles.player__btnRepeat, styles.btnIcon)}
-                onClick={onToggleLoop}
+                onClick={ notFunction}
               >
                 <svg
                   className={classNames(styles.player__btnRepeatSvg, {
@@ -158,7 +157,7 @@ export default function Bar() {
                   styles.player__btnShuffle,
                   styles.btnIcon,
                 )}
-                onClick={onToggleShuffle}
+                onClick={ notFunction}
               >
                 <svg
                   className={classNames(styles.player__btnShuffleSvg, {
@@ -210,11 +209,6 @@ export default function Bar() {
                     <use xlinkHref="/icon/sprite.svg#icon-dislike"></use>
                   </svg>
                 </div>
-              </div>
-              <div>
-                <span className={styles.track__timeText}>
-                  {getTimePanel(timeValue, audioRef.current?.duration)}
-                </span>
               </div>
             </div>
           </div>

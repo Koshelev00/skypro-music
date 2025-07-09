@@ -61,7 +61,6 @@
   fill: #B672FF;
 }
 
-/* Пульсация */
 .animate {
   animation: pulse 1.5s infinite;
 }

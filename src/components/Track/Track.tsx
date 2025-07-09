@@ -10,17 +10,21 @@ import classNames from 'classnames';
 type TrackProps = {
   track: TrackType;
   playlist: TrackType[]
+  
+  
 };
+
 export default function Track({ track,playlist }: TrackProps) {
   const dispatch = useAppDispatch();
   const onClickTrack = () => {
     dispatch(setCurrentTrack(track));
     dispatch(setIsPlay(true));
-    dispatch(setCurrentPlaylist(playlist))
+    dispatch(setCurrentPlaylist(playlist || []))
   };
   const isPlay = useAppSelector((state) => state.tracks.isPlay);
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
   const isCurrent = currentTrack?._id === track._id;
+  
 
   return (
     <div
@@ -31,10 +35,7 @@ export default function Track({ track,playlist }: TrackProps) {
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div
-            className={classNames(styles.track__titleImage, {
-              // [styles.track_active]: isCurrent,
-              // [styles.track_pulse]: isCurrent && isPlay,
-            })}
+            className={classNames(styles.track__titleImage)}
           >
             {isCurrent ? (
     <svg className={classNames(styles.track__titleSvg, {
