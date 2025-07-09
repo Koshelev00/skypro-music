@@ -32,13 +32,19 @@ export default function Track({ track,playlist }: TrackProps) {
         <div className={styles.track__title}>
           <div
             className={classNames(styles.track__titleImage, {
-              [styles.track_active]: isCurrent,
-              [styles.track_pulse]: isCurrent && isPlay,
+              // [styles.track_active]: isCurrent,
+              // [styles.track_pulse]: isCurrent && isPlay,
             })}
           >
-            <svg className={styles.track__titleSvg}>
-              <use xlinkHref="/icon/sprite.svg#icon-note"></use>
-            </svg>
+            {isCurrent ? (
+    <svg className={styles.track__titleSvg}>
+      <use xlinkHref="/icon/sprite.svg#icon-activePlayTrack"></use>
+    </svg>
+  ) : (
+    <svg className={styles.track__titleSvg}>
+      <use xlinkHref="/icon/sprite.svg#icon-note"></use>
+    </svg>
+  )}
           </div>
           <div>
             <Link className={styles.track__titleLink} href="">
