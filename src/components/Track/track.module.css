@@ -58,26 +58,26 @@
   stroke: #4e4e4e;
 }
 .track_active {
-  width: 8px;
-  height: 8px;
-  background-color: #ad61ff;
-  border-radius: 50%;
+  fill: #B672FF;
 }
 
 /* Пульсация */
-.track_pulse {
+.animate {
   animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(173, 97, 255, 0.7);
+    transform: scale(1);
+    opacity: 1;
   }
-  70% {
-    box-shadow: 0 0 0 10px rgba(173, 97, 255, 0);
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(173, 97, 255, 0);
+    transform: scale(1);
+    opacity: 1;
   }
 }
 

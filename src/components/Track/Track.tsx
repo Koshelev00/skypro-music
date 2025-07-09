@@ -37,7 +37,9 @@ export default function Track({ track,playlist }: TrackProps) {
             })}
           >
             {isCurrent ? (
-    <svg className={styles.track__titleSvg}>
+    <svg className={classNames(styles.track__titleSvg, {
+      [styles.animate]: isCurrent && isPlay
+    })}>
       <use xlinkHref="/icon/sprite.svg#icon-activePlayTrack"></use>
     </svg>
   ) : (
