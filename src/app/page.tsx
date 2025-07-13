@@ -13,13 +13,12 @@ export default function Home() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <main className={styles.main}>
-
-         <Nav />
-        <CenterBlock />
+          <Nav />
+          <CenterBlock />
           <SideBar />
-          <Bar/>
+          <Bar />
         </main>
-       
+
         <footer className="footer"></footer>
       </div>
     </div>

@@ -4,27 +4,28 @@ import Link from 'next/link';
 import { formatTime } from '@/utils/helper';
 import { TrackType } from '../../app/sharedTypes/sharedTypes';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { setCurrentPlaylist, setCurrentTrack, setIsPlay } from '@/store/features/trackSlice';
+import {
+  setCurrentPlaylist,
+  setCurrentTrack,
+  setIsPlay,
+} from '@/store/features/trackSlice';
 import classNames from 'classnames';
 
 type TrackProps = {
   track: TrackType;
-  playlist: TrackType[]
-  
-  
+  playlist: TrackType[];
 };
 
-export default function Track({ track,playlist }: TrackProps) {
+export default function Track({ track, playlist }: TrackProps) {
   const dispatch = useAppDispatch();
   const onClickTrack = () => {
     dispatch(setCurrentTrack(track));
     dispatch(setIsPlay(true));
-    dispatch(setCurrentPlaylist(playlist || []))
+    dispatch(setCurrentPlaylist(playlist || []));
   };
   const isPlay = useAppSelector((state) => state.tracks.isPlay);
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
   const isCurrent = currentTrack?._id === track._id;
-  
 
   return (
     <div
@@ -34,20 +35,20 @@ export default function Track({ track,playlist }: TrackProps) {
     >
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
-          <div
-            className={classNames(styles.track__titleImage)}
-          >
+          <div className={classNames(styles.track__titleImage)}>
             {isCurrent ? (
-    <svg className={classNames(styles.track__titleSvg, {
-      [styles.animate]: isCurrent && isPlay
-    })}>
-      <use xlinkHref="/icon/sprite.svg#icon-activePlayTrack"></use>
-    </svg>
-  ) : (
-    <svg className={styles.track__titleSvg}>
-      <use xlinkHref="/icon/sprite.svg#icon-note"></use>
-    </svg>
-  )}
+              <svg
+                className={classNames(styles.track__titleSvg, {
+                  [styles.animate]: isCurrent && isPlay,
+                })}
+              >
+                <use xlinkHref="/icon/sprite.svg#icon-activePlayTrack"></use>
+              </svg>
+            ) : (
+              <svg className={styles.track__titleSvg}>
+                <use xlinkHref="/icon/sprite.svg#icon-note"></use>
+              </svg>
+            )}
           </div>
           <div>
             <Link className={styles.track__titleLink} href="">

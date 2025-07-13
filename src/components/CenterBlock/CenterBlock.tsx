@@ -1,82 +1,57 @@
-
 'use client';
-import { useState,useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import styles from './ceneterBlock.module.css';
 import classNames from 'classnames';
 import Search from '../Search/Search';
 import Track from '../Track/Track';
 import FilterItem from '../FilterItem/FilterItem';
 import FilterModal from '../Filter/Filter';
-import { data } from '../../data';
-import { TrackType } from '../../app/sharedTypes/sharedTypes';
+import { data } from '@/data';
+import { TrackType } from '@/app/sharedTypes/sharedTypes';
 import { getUniqueValueByKey } from '@/utils/helper';
 
 export default function Centerblock() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedValue, setSelectedValue] = useState<string>('');
-  const [position, setPosition] = useState({ top: 0, left: 0 });
-  const buttonRef = useRef<HTMLDivElement | null>(null);
-   const [values, setValues] = useState<string[]>([]);
- 
-  const updatePosition = () => {
-  if (buttonRef.current) {
-    const rect = buttonRef.current.getBoundingClientRect();
-    const zoomLevel = window.visualViewport?.scale || 1;
-    
-    setPosition({
-      top: rect.bottom + window.scrollY + 8,
-      left: rect.left + window.scrollX - 38,
-    });
-  }
-};
+  const [position, setPosition] = useState<{ top: number; left: number }>({
+    top: 0,
+    left: 0,
+  });
+  const [values, setValues] = useState<string[]>([]);
 
-   const handleFilterClick = (label: string, ref: HTMLDivElement | null) => {
+  const handleFilterClick = (
+    label: string,
+    buttonRef: HTMLDivElement | null,
+  ) => {
+    if (buttonRef) {
+      const rect = buttonRef.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX - 38,
+      });
+    }
+
     if (activeFilter === label) {
       setActiveFilter(null);
       return;
     }
-    if (ref) buttonRef.current = ref;
-    updatePosition();
-     if (label === 'исполнителю') {
+
+    if (label === 'исполнителю') {
       setValues(getUniqueValueByKey(data, 'author'));
     } else if (label === 'жанру') {
       setValues(getUniqueValueByKey(data, 'genre'));
     } else if (label === 'году выпуска') {
       setValues(['По умолчанию', 'Сначала новые', 'Сначала старые']);
     }
+
     setActiveFilter(label);
   };
+
   const handleSelect = (value: string) => {
     setSelectedValue(value);
     setActiveFilter(null);
-  }
-  
-   useEffect(() => {
-  if (!activeFilter) return;
-
-  const onScrollOrResizeOrZoom = () => {
-    updatePosition();
   };
 
-  window.addEventListener('scroll', onScrollOrResizeOrZoom);
-  window.addEventListener('resize', onScrollOrResizeOrZoom);
-  
-  // Добавляем обработчик изменения масштаба
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', onScrollOrResizeOrZoom);
-  }
-
-  return () => {
-    window.removeEventListener('scroll', onScrollOrResizeOrZoom);
-    window.removeEventListener('resize', onScrollOrResizeOrZoom);
-    
-    if (window.visualViewport) {
-      window.visualViewport.removeEventListener('resize', onScrollOrResizeOrZoom);
-    }
-  };
-}, [activeFilter]);
-
-  
   return (
     <div className={styles.centerblock}>
       <Search />
@@ -102,7 +77,6 @@ export default function Centerblock() {
         />
       </div>
 
-    
       {activeFilter && (
         <FilterModal
           values={values}
@@ -132,11 +106,10 @@ export default function Centerblock() {
         </div>
         <div className={styles.content__playlist}>
           {data.map((track: TrackType) => (
-            <Track key={track._id} track={track} />
+            <Track key={track._id} track={track} playlist={data} />
           ))}
         </div>
       </div>
     </div>
   );
 }
-
