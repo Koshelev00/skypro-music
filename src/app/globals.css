@@ -3,9 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
-  font-family: var(--font-montserrat);
+  font-family: var(--font-montserrat, 'Arial');
 }
+
 h1,
 h2,
 h3,
@@ -15,12 +17,12 @@ h6,
 p {
   margin: 0;
 }
-
 a,
 input,
 button {
-  font-family: var(--font-montserrat), 'Arial';
+  font-family: var(--font-montserrat, 'Arial');
 }
-a{
+
+a {
   text-decoration: none;
 }

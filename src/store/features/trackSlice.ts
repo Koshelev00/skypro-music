@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TrackType } from '../../app/sharedTypes/sharedTypes';
+import { TrackType } from '@/app/sharedTypes/sharedTypes';
 
 type initialStateType = {
   currentTrack: TrackType | null;
@@ -50,10 +50,8 @@ const trackSlice = createSlice({
       const curIndex = playlist.findIndex(
         (el) => el._id === state.currentTrack?._id,
       );
-      if (curIndex < playlist.length - 1) {
-        const nextIndexTrack = curIndex + 1;
-        state.currentTrack = playlist[nextIndexTrack];
-      }
+      const nextIndex = (curIndex + 1) % playlist.length;
+      state.currentTrack = playlist[nextIndex];
     },
     setPrevTrack: (state) => {
       const playlist = state.isShuffle
@@ -63,10 +61,8 @@ const trackSlice = createSlice({
       const curIndex = playlist.findIndex(
         (el) => el._id === state.currentTrack?._id,
       );
-      if (curIndex > 0) {
-        const nextIndexTrack = curIndex - 1;
-        state.currentTrack = playlist[nextIndexTrack];
-      }
+      const prevIndex = (curIndex - 1 + playlist.length) % playlist.length;
+      state.currentTrack = playlist[prevIndex];
     },
 
     setAllTracks: (state, action: PayloadAction<TrackType[]>) => {
@@ -78,7 +74,6 @@ const trackSlice = createSlice({
     setFetchIsLoading: (state, action: PayloadAction<boolean>) => {
       state.fetchIsLoading = action.payload;
     },
-
   },
 });
 
@@ -91,7 +86,6 @@ export const {
   setPrevTrack,
   setFetchIsLoading,
   setFetchError,
-  setAllTracks, 
-
+  setAllTracks,
 } = trackSlice.actions;
 export const trackSliceReducer = trackSlice.reducer;

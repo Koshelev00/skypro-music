@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Image from 'next/image';
 import styles from './navigation.module.css';
 import Link from 'next/link';
@@ -15,9 +15,9 @@ export default function Navigation() {
   return (
     <nav className={styles.main__nav}>
       <div className={styles.nav__logo}>
-         {/*TODO: img –> Image*/}
+        {/*TODO: img –> Image*/}
         <Image
-           width={113}
+          width={113}
           height={17}
           className={styles.logo__image}
           src="/logo.png"
@@ -45,7 +45,7 @@ export default function Navigation() {
             </Link>
           </li>
           <li className={styles.menu__item}>
-           <Link href="/SignIn" className={styles.menu__link}>
+            <Link href="/SignIn" className={styles.menu__link}>
               Выйти
             </Link>
           </li>

@@ -10,7 +10,6 @@ import {
   setPrevTrack,
   toggleShuffle,
 } from '@/store/features/trackSlice';
-import { getTimePanel } from '../../utils/helper';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
 export default function Bar() {
@@ -90,21 +89,30 @@ export default function Bar() {
     setIsShuffle(!isShuffle);
     dispatch(toggleShuffle());
   };
-  const notFunction= () => {
-      alert('Еще не реализовано')
-  }
 
-  
+  const handleTrackEnd = () => {
+    if (isLoop) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+      }
+    } else {
+      dispatch(setNextTrack());
+    }
+  };
+
   return (
     <div className={styles.bar}>
       <audio
         className={styles.audio}
         ref={audioRef}
+        controls
         src={currentTrack?.track_file}
         preload="auto"
         loop={isLoop}
         onTimeUpdate={onTimeUpdate}
         onLoadedMetadata={onLoadedMetaData}
+        onEnded={handleTrackEnd}
       ></audio>
       <div className={styles.bar__content}>
         <ProgressBar
@@ -117,8 +125,10 @@ export default function Bar() {
         <div className={styles.bar__playerBlock}>
           <div className={styles.bar__player}>
             <div className={styles.player__controls}>
-              <div className={styles.player__btnPrev} onClick={ notFunction}>
-                <svg className={styles.player__btnPrevSvg}>
+              <div className={styles.player__btnPrev} onClick={onPrevTrack}>
+                <svg
+                  className={classNames(styles.player__btnPrevSvg, styles.btn)}
+                >
                   <use xlinkHref="/icon/sprite.svg#icon-prev"></use>
                 </svg>
               </div>
@@ -130,20 +140,23 @@ export default function Bar() {
                   <use
                     xlinkHref={
                       !isPlay
-                        ? 'icon/sprite.svg#icon-play'
-                        : 'icon/sprite.svg#icon-pause'
+                        ? '/icon/sprite.svg#icon-play'
+                        : '/icon/sprite.svg#icon-pause'
                     }
                   ></use>
                 </svg>
               </div>
-              <div className={styles.player__btnNext} onClick={ notFunction}>
+              <div
+                className={classNames(styles.player__btnNext, styles.btn)}
+                onClick={onNextTrack}
+              >
                 <svg className={styles.player__btnNextSvg}>
                   <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                 </svg>
               </div>
               <div
                 className={classNames(styles.player__btnRepeat, styles.btnIcon)}
-                onClick={ notFunction}
+                onClick={onToggleLoop}
               >
                 <svg
                   className={classNames(styles.player__btnRepeatSvg, {
@@ -158,7 +171,7 @@ export default function Bar() {
                   styles.player__btnShuffle,
                   styles.btnIcon,
                 )}
-                onClick={ notFunction}
+                onClick={onToggleShuffle}
               >
                 <svg
                   className={classNames(styles.player__btnShuffleSvg, {
