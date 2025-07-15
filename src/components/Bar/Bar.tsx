@@ -11,6 +11,7 @@ import {
   toggleShuffle,
 } from '@/store/features/trackSlice';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import { getTimePanel } from '@/utils/helper';
 
 export default function Bar() {
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
@@ -225,6 +226,11 @@ export default function Bar() {
                 </div>
               </div>
             </div>
+             <div className={styles.track__timeBlock}>
+                <span className={styles.track__timeText}>
+                  {getTimePanel(timeValue, audioRef.current?.duration)}
+                </span>
+              </div>
           </div>
           <div className={styles.bar__volumeBlock}>
             <div className={styles.volume__content}>
