@@ -14,7 +14,7 @@ export default function Home() {
       <div className={styles.container}>
         <main className={styles.main}>
           <Nav />
-          <CenterBlock />
+          <CenterBlock data={[]} title={''} isLoading={false} errorRes={null} />
           <SideBar />
           <Bar />
         </main>

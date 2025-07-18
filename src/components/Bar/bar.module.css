@@ -372,3 +372,6 @@
     cursor: pointer;
   }
 }
+.track__timeBlock {
+  margin-left: 90%;
+}

@@ -1,26 +1,16 @@
+
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import {
-  setCurrentPlaylist,
-  trackSliceReducer,
-} from '@/store/features/trackSlice';
-import { data } from '@/data';
+import { trackSliceReducer } from '@/store/features/trackSlice';
+import authReducer from '@/store/features/authSlice';
 
 export const makeStore = () => {
-  const store = configureStore({
+  return configureStore({
     reducer: combineReducers({
       tracks: trackSliceReducer,
+      auth: authReducer,
     }),
   });
-
-  if (typeof window !== 'undefined') {
-    const initialState = store.getState();
-    if (initialState.tracks.playlist.length === 0) {
-      store.dispatch(setCurrentPlaylist(data));
-    }
-  }
-
-  return store;
 };
 
 export type AppStore = ReturnType<typeof makeStore>;

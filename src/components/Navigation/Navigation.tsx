@@ -14,8 +14,8 @@ export default function Navigation() {
 
   return (
     <nav className={styles.main__nav}>
-      <div className={styles.nav__logo}>
-        {/*TODO: img –> Image*/}
+      <div className={styles.nav__logo}> 
+           <Link href="/music/main" className={styles.menu__link}>
         <Image
           width={113}
           height={17}
@@ -23,6 +23,7 @@ export default function Navigation() {
           src="/logo.png"
           alt={'logo'}
         />
+        </Link>
       </div>
 
       <BurgerButton isOpen={menuOpen} toggle={toggleMenu} />
@@ -33,15 +34,14 @@ export default function Navigation() {
         }`}
       >
         <ul className={styles.menu__list}>
-          <li className={styles.menu__item}>
-            {/*TODO: a -> Link*/}
-            <Link href="#" className={styles.menu__link}>
+          <li className={styles.menu__item}>         
+            <Link href="/music/main" className={styles.menu__link}>
               Главное
             </Link>
           </li>
           <li className={styles.menu__item}>
             <Link href="#" className={styles.menu__link}>
-              Мой плейлист
+              Мои треки
             </Link>
           </li>
           <li className={styles.menu__item}>

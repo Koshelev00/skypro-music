@@ -1,16 +1,28 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styles from './ceneterBlock.module.css';
 import classNames from 'classnames';
 import Search from '../Search/Search';
 import Track from '../Track/Track';
 import FilterItem from '../FilterItem/FilterItem';
 import FilterModal from '../Filter/Filter';
-import { data } from '@/data';
 import { TrackType } from '@/app/sharedTypes/sharedTypes';
 import { getUniqueValueByKey } from '@/utils/helper';
 
-export default function Centerblock() {
+type TrackDataProps = {
+  data: TrackType[];
+  title: string;
+  isLoading: boolean;
+  errorRes: null | string;
+};
+
+export default function Centerblock({
+  data,
+  title,
+  isLoading,
+  errorRes,
+}: TrackDataProps) {
+
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [position, setPosition] = useState<{ top: number; left: number }>({
@@ -43,7 +55,7 @@ export default function Centerblock() {
     } else if (label === 'году выпуска') {
       setValues(['По умолчанию', 'Сначала новые', 'Сначала старые']);
     }
-
+ 
     setActiveFilter(label);
   };
 
@@ -55,7 +67,7 @@ export default function Centerblock() {
   return (
     <div className={styles.centerblock}>
       <Search />
-      <h2 className={styles.centerblock__h2}>Треки</h2>
+      <h2 className={styles.centerblock__h2}>{title}</ h2>
       <div className={styles.centerblock__filter}>
         <div className={styles.filter__title}>Искать по:</div>
         <FilterItem
@@ -105,9 +117,15 @@ export default function Centerblock() {
           </div>
         </div>
         <div className={styles.content__playlist}>
-          {data.map((track: TrackType) => (
-            <Track key={track._id} track={track} playlist={data} />
-          ))}
+          {errorRes ? (
+            <p className={styles.suspense}>{errorRes}</p>
+          ) : isLoading ? (
+            <p className={styles.suspense}>Идёт загрузка треков…</p>
+          ) : (
+            data.map((track: TrackType) => (
+              <Track key={track._id} track={track} playlist={data} />
+            ))
+          )}
         </div>
       </div>
     </div>
