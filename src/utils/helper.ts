@@ -38,8 +38,10 @@ export function getUniqueValueByKey(
   return Array.from(uniqueValues);
 }
 
-
-export const getTracksByIds = (tracks: TrackType[], idList: (string | number)[]): TrackType[] => {
+export const getTracksByIds = (
+  tracks: TrackType[],
+  idList: (string | number)[],
+): TrackType[] => {
   const idSet = new Set(idList);
-  return tracks.filter(track => idSet.has(track._id));
+  return tracks.filter((track) => idSet.has(track._id));
 };

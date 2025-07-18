@@ -1,13 +1,11 @@
-
-'use client'
+'use client';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './sidebar.module.css';
-import { useAppSelector,useAppDispatch } from '@/store/store';
+import { useAppSelector, useAppDispatch } from '@/store/store';
 import { clearUser } from '@/store/features/authSlice';
-
 
 export default function SideBar() {
   const user = useAppSelector((state) => state.auth.user);
@@ -18,7 +16,7 @@ export default function SideBar() {
     // 1. Очистить Redux-стор
     dispatch(clearUser());
     router.push('/SignIn');
-  }
+  };
   return (
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>

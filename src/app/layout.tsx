@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import ReduxProvider from '../store/ReduxProvider';
@@ -20,12 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-  
-      <ReduxProvider>
+    <ReduxProvider>
       <html lang="ru">
-          <body className={`${montserrat.variable}`}>{children}</body>
-</html>
-      </ReduxProvider>
-    
+        <body className={`${montserrat.variable}`}>{children}</body>
+      </html>
+    </ReduxProvider>
   );
 }

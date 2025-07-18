@@ -3,7 +3,7 @@ import Centerblock from '@/components/CenterBlock/CenterBlock';
 import { useParams } from 'next/navigation';
 import { getTracksByIds } from '@/utils/helper';
 import { useState, useEffect } from 'react';
-import {getTrackSet } from '@/services/tracksApi';
+import { getTrackSet } from '@/services/tracksApi';
 import { TrackType, TrackSetType } from '@/app/sharedTypes/sharedTypes';
 import { AxiosError } from 'axios';
 import { useAppSelector } from '@/store/store';

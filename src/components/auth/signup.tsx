@@ -42,54 +42,54 @@ export default function SignUp() {
     }
   };
   return (
-     <div className={styles.wrapper}>
-        <div className={styles.containerEnter}>
-          <div className={styles.modal__block}>
-      <form className={styles.modal__form} onSubmit={handleSubmit}>
-        <Link href="/SignIn">
-          <div className={styles.modal__logo}>
-            <Image
-              src="/logo_modal.png"
-              alt="logo"
-              width={140}
-              height={21}
+    <div className={styles.wrapper}>
+      <div className={styles.containerEnter}>
+        <div className={styles.modal__block}>
+          <form className={styles.modal__form} onSubmit={handleSubmit}>
+            <Link href="/SignIn">
+              <div className={styles.modal__logo}>
+                <Image
+                  src="/logo_modal.png"
+                  alt="logo"
+                  width={140}
+                  height={21}
+                />
+              </div>
+            </Link>
+            <input
+              className={classNames(styles.modal__input, styles.login)}
+              type="text"
+              name="username"
+              placeholder="Имя"
+              autoComplete="username"
+              onChange={handleChange}
+              value={formData.username}
             />
-          </div>
-        </Link>
-        <input
-          className={classNames(styles.modal__input, styles.login)}
-          type="text"
-          name="username"
-          placeholder="Имя"
-          autoComplete="username"
-          onChange={handleChange}
-          value={formData.username}
-        />
-        <input
-          className={styles.modal__input}
-          type="email"
-          name="email"
-          placeholder="Почта"
-          autoComplete="email"
-          onChange={handleChange}
-          value={formData.email}
-        />
-        <input
-          className={styles.modal__input}
-          type="password"
-          name="password"
-          placeholder="Пароль"
-          autoComplete="new-password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <div className={styles.errorContainer}>{error}</div>
-        <button disabled={isLoading} className={styles.modal__btnSignupEnt}>
-          Зарегистрироваться
-        </button>
-      </form>
-     </div>
+            <input
+              className={styles.modal__input}
+              type="email"
+              name="email"
+              placeholder="Почта"
+              autoComplete="email"
+              onChange={handleChange}
+              value={formData.email}
+            />
+            <input
+              className={styles.modal__input}
+              type="password"
+              name="password"
+              placeholder="Пароль"
+              autoComplete="new-password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <div className={styles.errorContainer}>{error}</div>
+            <button disabled={isLoading} className={styles.modal__btnSignupEnt}>
+              Зарегистрироваться
+            </button>
+          </form>
         </div>
       </div>
+    </div>
   );
 }

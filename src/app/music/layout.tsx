@@ -6,7 +6,6 @@ import Bar from '@/components/Bar/Bar';
 
 import FetchingTracks from '@/components/FetchingTracks/FetchingTracks';
 
-
 interface MusicLayoutProps {
   children: ReactNode;
 }

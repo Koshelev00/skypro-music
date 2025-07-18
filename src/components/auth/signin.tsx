@@ -41,56 +41,55 @@ export default function Signin() {
   };
 
   return (
-    
     <div className={styles.wrapper}>
-        <div className={styles.containerEnter}>
-          <div className={styles.modal__block}>
-        <form className={styles.modal__form} onSubmit={handleSubmit}>
-        <Link href="#">
-          <div className={styles.modal__logo}>
-            <Image
-              src="/logo_modal.png"
-              alt="logo"
-              width={140}
-              height={21}
-            />
-          </div>
-        </Link>
+      <div className={styles.containerEnter}>
+        <div className={styles.modal__block}>
+          <form className={styles.modal__form} onSubmit={handleSubmit}>
+            <Link href="#">
+              <div className={styles.modal__logo}>
+                <Image
+                  src="/logo_modal.png"
+                  alt="logo"
+                  width={140}
+                  height={21}
+                />
+              </div>
+            </Link>
 
-        <input
-          className={classNames(styles.modal__input, styles.login)}
-          type="text"
-          name="email"
-          placeholder="Почта"
-          value={formData.email}
-          onChange={handleChange}
-          autoComplete="username"
-        />
-        <input
-          className={classNames(styles.modal__input)}
-          type="password"
-          name="password"
-          placeholder="Пароль"
-          value={formData.password}
-          onChange={handleChange}
-          autoComplete="current-password"
-        />
-        <div className={styles.errorContainer}>
-          {error && <span className={styles.errorText}>{error}</span>}
+            <input
+              className={classNames(styles.modal__input, styles.login)}
+              type="text"
+              name="email"
+              placeholder="Почта"
+              value={formData.email}
+              onChange={handleChange}
+              autoComplete="username"
+            />
+            <input
+              className={classNames(styles.modal__input)}
+              type="password"
+              name="password"
+              placeholder="Пароль"
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="current-password"
+            />
+            <div className={styles.errorContainer}>
+              {error && <span className={styles.errorText}>{error}</span>}
+            </div>
+            <button
+              disabled={isLoading}
+              className={styles.modal__btnEnter}
+              type="submit"
+            >
+              Войти
+            </button>
+            <Link href={'/SignUp'} className={styles.modal__btnSignup}>
+              Зарегистрироваться
+            </Link>
+          </form>
         </div>
-        <button
-          disabled={isLoading}
-          className={styles.modal__btnEnter}
-          type="submit"
-        >
-          Войти
-        </button>
-        <Link href={'/SignUp'} className={styles.modal__btnSignup}>
-          Зарегистрироваться
-        </Link>
-      </form>
-         </div>
-        </div>
-       </div>
+      </div>
+    </div>
   );
 }

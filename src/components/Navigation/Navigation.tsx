@@ -14,15 +14,15 @@ export default function Navigation() {
 
   return (
     <nav className={styles.main__nav}>
-      <div className={styles.nav__logo}> 
-           <Link href="/music/main" className={styles.menu__link}>
-        <Image
-          width={113}
-          height={17}
-          className={styles.logo__image}
-          src="/logo.png"
-          alt={'logo'}
-        />
+      <div className={styles.nav__logo}>
+        <Link href="/music/main" className={styles.menu__link}>
+          <Image
+            width={113}
+            height={17}
+            className={styles.logo__image}
+            src="/logo.png"
+            alt={'logo'}
+          />
         </Link>
       </div>
 
@@ -34,7 +34,7 @@ export default function Navigation() {
         }`}
       >
         <ul className={styles.menu__list}>
-          <li className={styles.menu__item}>         
+          <li className={styles.menu__item}>
             <Link href="/music/main" className={styles.menu__link}>
               Главное
             </Link>

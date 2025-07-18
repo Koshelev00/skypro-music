@@ -116,11 +116,11 @@ export default function Bar() {
         onEnded={handleTrackEnd}
       ></audio>
       <div className={styles.bar__content}>
-         <div className={styles.track__timeBlock}>
-                <span className={styles.track__timeText}>
-                  {getTimePanel(timeValue, audioRef.current?.duration)}
-                </span>
-              </div>
+        <div className={styles.track__timeBlock}>
+          <span className={styles.track__timeText}>
+            {getTimePanel(timeValue, audioRef.current?.duration)}
+          </span>
+        </div>
         <ProgressBar
           max={audioRef.current?.duration || 0}
           step={0.1}
