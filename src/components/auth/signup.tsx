@@ -2,12 +2,10 @@
 import styles from './signup.module.css';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import Image from 'next/image';
 import { signUp } from '@/services/auth';
 import { useRouter } from 'next/navigation';
-import { setUser } from '@/store/features/authSlice';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -18,7 +16,6 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,7 +29,6 @@ export default function SignUp() {
       const user = await signUp(formData);
 
       if (user) {
-        dispatch(setUser(user));
         router.push('/SignIn');
       }
     } catch (err) {
@@ -64,6 +60,7 @@ export default function SignUp() {
               autoComplete="username"
               onChange={handleChange}
               value={formData.username}
+              required
             />
             <input
               className={styles.modal__input}
@@ -73,6 +70,7 @@ export default function SignUp() {
               autoComplete="email"
               onChange={handleChange}
               value={formData.email}
+              required
             />
             <input
               className={styles.modal__input}
@@ -82,6 +80,8 @@ export default function SignUp() {
               autoComplete="new-password"
               value={formData.password}
               onChange={handleChange}
+              required
+              minLength={6}
             />
             <div className={styles.errorContainer}>{error}</div>
             <button disabled={isLoading} className={styles.modal__btnSignupEnt}>

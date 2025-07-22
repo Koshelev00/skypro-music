@@ -1,29 +1,24 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './sidebar.module.css';
-import { useAppSelector, useAppDispatch } from '@/store/store';
-import { clearUser } from '@/store/features/authSlice';
+import { useAppSelector } from '@/store/store';
+import { useLogout } from '@/app/hooks/useAuth';
 
 export default function SideBar() {
   const user = useAppSelector((state) => state.auth.user);
-  const router = useRouter();
-  const displayName = user?.username ?? 'Гость';
-  const dispatch = useAppDispatch();
-  const handleLogout = () => {
-    // 1. Очистить Redux-стор
-    dispatch(clearUser());
-    router.push('/SignIn');
-  };
+  const handleLogout = useLogout();
+  
+  const displayName = user?.username;
+  
   return (
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
         <p className={styles.sidebar__personalName}>{displayName}</p>
         <div className={styles.sidebar__icon} onClick={handleLogout}>
           <svg>
-            <use xlinkHref="/icon/sprite.svg#logout"></use>
+            <use xlinkHref={user ? '/icon/sprite.svg#logout' : ''}></use>
           </svg>
         </div>
       </div>

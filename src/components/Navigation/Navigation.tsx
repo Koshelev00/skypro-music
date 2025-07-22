@@ -4,9 +4,11 @@ import styles from './navigation.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
 import BurgerButton from '@/components/BurgerButton/BurgerButton';
+import { useLogout } from '@/app/hooks/useAuth';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const handleLogout = useLogout();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -44,10 +46,10 @@ export default function Navigation() {
               Мои треки
             </Link>
           </li>
-          <li className={styles.menu__item}>
-            <Link href="/SignIn" className={styles.menu__link}>
+          <li className={styles.menu__item} onClick={handleLogout}>
+           <div className={styles.menu__link}>
               Выйти
-            </Link>
+            </div>
           </li>
         </ul>
       </div>

@@ -34,7 +34,7 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 43px 44px 47px 40px;
+  padding: 43px 44px 49px 40px;
 }
 
 .modal__form input:first-child {
@@ -73,6 +73,7 @@
   border-right: none;
   border-bottom: 1px solid #d0cece;
   padding: 8px 1px;
+  margin-bottom: 30px;
 }
 
 .modal__input::-webkit-input-placeholder {
@@ -116,7 +117,7 @@
   height: 52px;
   background-color: #580ea2;
   border-radius: 6px;
-  margin-top: 60px;
+  margin-top: 30px;
   margin-bottom: 20px;
   border: none;
   display: -webkit-box;
@@ -163,7 +164,7 @@
 }
 
 .errorContainer {
-  padding-top: 8px;
+  padding-top: 6px;
   display: flex;
   flex-direction: column;
   gap: 5px;

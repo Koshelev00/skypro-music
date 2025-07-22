@@ -9,7 +9,6 @@ import Image from 'next/image';
 import { signIn } from '@/services/auth';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
 export default function Signin() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
@@ -57,13 +56,14 @@ export default function Signin() {
             </Link>
 
             <input
-              className={classNames(styles.modal__input, styles.login)}
-              type="text"
+              className={classNames(styles.modal__input)}
+              type="email"
               name="email"
               placeholder="Почта"
               value={formData.email}
               onChange={handleChange}
-              autoComplete="username"
+              autoComplete="current-email"
+              required
             />
             <input
               className={classNames(styles.modal__input)}
@@ -73,6 +73,8 @@ export default function Signin() {
               value={formData.password}
               onChange={handleChange}
               autoComplete="current-password"
+              required
+              minLength={6}
             />
             <div className={styles.errorContainer}>
               {error && <span className={styles.errorText}>{error}</span>}

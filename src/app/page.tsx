@@ -1,5 +1,5 @@
-import Signin from '@/components/auth/signin';
+import NotFound from '@/components/notFound/notFound';
 
-export default function Home() {
-  return <Signin />;
+export default function NotFoundPage() {
+  return <NotFound />;
 }

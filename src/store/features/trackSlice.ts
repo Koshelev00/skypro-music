@@ -74,6 +74,12 @@ const trackSlice = createSlice({
     setFetchIsLoading: (state, action: PayloadAction<boolean>) => {
       state.fetchIsLoading = action.payload;
     },
+    clearPlayer(state) {
+      state.currentTrack = null;
+      state.isPlay = false;
+      state.playlist = [];
+      state.shuffledPlaylist = [];
+    },
   },
 });
 
@@ -87,5 +93,7 @@ export const {
   setFetchIsLoading,
   setFetchError,
   setAllTracks,
+  clearPlayer,
 } = trackSlice.actions;
+
 export const trackSliceReducer = trackSlice.reducer;

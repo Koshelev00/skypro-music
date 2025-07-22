@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import ReduxProvider from '../store/ReduxProvider';
 import './globals.css';
-
+import AuthWrapper from '@/components/auth/AuthWrapper';
 const montserrat = Montserrat({
   variable: '--font-montserrat',
   subsets: ['latin'],
@@ -19,10 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReduxProvider>
-      <html lang="ru">
-        <body className={`${montserrat.variable}`}>{children}</body>
-      </html>
-    </ReduxProvider>
+    <html lang="ru">
+      <body className={`${montserrat.variable}`}>
+        <ReduxProvider>
+          <AuthWrapper>{children}</AuthWrapper>
+        </ReduxProvider>
+      </body>
+    </html>
   );
 }

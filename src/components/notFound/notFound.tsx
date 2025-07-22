@@ -10,7 +10,7 @@ export default function NotFound() {
             <div className={styles.modal__headbox}>
               <div className={styles.modal__head}>
                 <h2 className={styles.modal__h2}>Страница не найдена</h2>
-                <img src="/smile_crying.png" alt="cry_smile" />
+                <img src="/smile_crying.svg" alt="cry_smile" />
               </div>
               <div className={styles.modal__box}>
                 <p className={styles.modal__text}>

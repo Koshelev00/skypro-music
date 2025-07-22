@@ -12,19 +12,17 @@ interface MusicLayoutProps {
 
 export default function MusicLayout({ children }: MusicLayoutProps) {
   return (
-    <>
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <main className={styles.main}>
-            <FetchingTracks />
-            <Navigation />
-            {children}
-            <Sidebar />
-          </main>
-          <Bar />
-          <footer className="footer"></footer>
-        </div>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <FetchingTracks />
+          <Navigation />
+          {children}
+          <Sidebar />
+        </main>
+        <Bar />
+        <footer className="footer"></footer>
       </div>
-    </>
+    </div>
   );
 }
