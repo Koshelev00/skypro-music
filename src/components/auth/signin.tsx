@@ -44,7 +44,7 @@ export default function Signin() {
       <div className={styles.containerEnter}>
         <div className={styles.modal__block}>
           <form className={styles.modal__form} onSubmit={handleSubmit}>
-            <Link href="#">
+            <Link href="/music/main">
               <div className={styles.modal__logo}>
                 <Image
                   src="/logo_modal.png"

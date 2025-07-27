@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import BurgerButton from '@/components/BurgerButton/BurgerButton';
 import { useLogout } from '@/app/hooks/useAuth';
+import { useAppSelector } from '@/store/store';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,6 +14,7 @@ export default function Navigation() {
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <nav className={styles.main__nav}>
@@ -48,7 +50,7 @@ export default function Navigation() {
           </li>
           <li className={styles.menu__item} onClick={handleLogout}>
            <div className={styles.menu__link}>
-              Выйти
+             {user ? 'Выйти' : 'Войти'}
             </div>
           </li>
         </ul>

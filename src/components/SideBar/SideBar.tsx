@@ -15,10 +15,10 @@ export default function SideBar() {
   return (
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
-        <p className={styles.sidebar__personalName}>{displayName}</p>
+        <p className={styles.sidebar__personalName}>{user ? displayName : 'Гость'}</p>
         <div className={styles.sidebar__icon} onClick={handleLogout}>
           <svg>
-            <use xlinkHref={user ? '/icon/sprite.svg#logout' : ''}></use>
+            <use xlinkHref={user ? '/icon/sprite.svg#logout' : '/icon/sprite.svg#login'}></use>
           </svg>
         </div>
       </div>
