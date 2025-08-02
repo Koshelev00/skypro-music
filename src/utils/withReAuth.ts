@@ -7,7 +7,6 @@ export const withReauth = async <T>(
   apiFunction: (access: string) => Promise<T>,
   refresh: string,
   dispatch: AppDispatch,
-
 ): Promise<T> => {
   try {
     return await apiFunction('');

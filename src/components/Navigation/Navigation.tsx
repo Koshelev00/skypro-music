@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const isAuth =  useAppSelector((state) => state.auth.isAuth);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const toggleMenu = () => {
@@ -60,7 +60,10 @@ export default function Navigation() {
             </Link>
           </li>
           <li className={styles.menu__item}>
-            <Link href={isAuth? '/music/favorite' : '/SignIn'} className={styles.menu__link}>
+            <Link
+              href={isAuth ? '/music/favorite' : '/SignIn'}
+              className={styles.menu__link}
+            >
               Мои треки
             </Link>
           </li>

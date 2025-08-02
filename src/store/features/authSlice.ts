@@ -27,7 +27,6 @@ const authSlice = createSlice({
     },
     setIsAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;
-      
     },
     setUserName(state, action: PayloadAction<string>) {
       state.username = action.payload;

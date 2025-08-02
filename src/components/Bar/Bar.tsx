@@ -94,7 +94,7 @@ export default function Bar() {
     dispatch(toggleShuffle());
   };
 
-   const handleTrackEnd = () => {
+  const handleTrackEnd = () => {
     if (isLoop) {
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
@@ -119,7 +119,7 @@ export default function Bar() {
         onEnded={handleTrackEnd}
       ></audio>
       <div className={styles.bar__content}>
-         <div className={styles.track__timeBlock}>
+        <div className={styles.track__timeBlock}>
           <span className={styles.track__timeText}>
             {getTimePanel(timeValue, audioRef.current?.duration)}
           </span>
@@ -153,7 +153,7 @@ export default function Bar() {
                   ></use>
                 </svg>
               </div>
-             <div
+              <div
                 className={classNames(styles.player__btnNext, styles.btn)}
                 onClick={onNextTrack}
               >

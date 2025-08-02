@@ -9,17 +9,21 @@ import CenterBlock from '../components/CenterBlock/CenterBlock';
 import SideBar from '../components/SideBar/SideBar';
 import { useAppSelector } from '@/store/store';
 
-
 export default function Home() {
-   const { fetchError, fetchIsLoading, allTracks } = useAppSelector(
-      (state) => state.tracks,
-    );
+  const { fetchError, fetchIsLoading, allTracks } = useAppSelector(
+    (state) => state.tracks,
+  );
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <main className={styles.main}>
           <Nav />
-          <CenterBlock data={allTracks} isLoading={fetchIsLoading} errorRes={fetchError} title={'Треки'} />
+          <CenterBlock
+            data={allTracks}
+            isLoading={fetchIsLoading}
+            errorRes={fetchError}
+            title={'Треки'}
+          />
           <SideBar />
           <Bar />
         </main>

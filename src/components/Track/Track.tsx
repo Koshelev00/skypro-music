@@ -21,7 +21,7 @@ export default function Track({ track, playlist }: TrackProps) {
   const onClickTrack = () => {
     dispatch(setCurrentTrack(track));
     dispatch(setIsPlay(true));
-    dispatch(setCurrentPlaylist(playlist|| []));
+    dispatch(setCurrentPlaylist(playlist || []));
   };
   const isPlay = useAppSelector((state) => state.tracks.isPlay);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -71,16 +71,12 @@ export default function Track({ track, playlist }: TrackProps) {
         </div>
         <div className="track__time">
           {!isAuth ? (
-            
             <svg
               className={classNames(styles.track__timeSvg, {
                 [styles.track__timeSvg_loading]: isLoading,
               })}
-
             >
-              <use
-                xlinkHref=""
-              ></use>
+              <use xlinkHref=""></use>
             </svg>
           ) : (
             <svg
@@ -93,16 +89,18 @@ export default function Track({ track, playlist }: TrackProps) {
               }}
             >
               <use
-                xlinkHref={isLike ? '/icon/sprite.svg#icon-like-active' : '/icon/sprite.svg#icon-like'}
+                xlinkHref={
+                  isLike
+                    ? '/icon/sprite.svg#icon-like-active'
+                    : '/icon/sprite.svg#icon-like'
+                }
               ></use>
             </svg>
           )}
-       
-            <span className={styles.track__timeText}>
+
+          <span className={styles.track__timeText}>
             {formatTime(track.duration_in_seconds)}
           </span>
-         
-
         </div>
       </div>
     </div>
