@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './ceneterBlock.module.css';
 import classNames from 'classnames';
 import Track from '../Track/Track';
@@ -39,48 +39,53 @@ export default function Centerblock({
   const [values, setValues] = useState<string[]>([]);
   const dispatch = useAppDispatch();
 
-  const handleFilterClick = (
-    label: string,
-    buttonRef: HTMLDivElement | null,
-  ) => {
-    if (buttonRef) {
-      const rect = buttonRef.getBoundingClientRect();
-      setPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX - 130,
-      });
-    }
+  const handleFilterClick = useCallback(
+    (label: string, buttonRef: HTMLDivElement | null) => {
+      if (buttonRef) {
+        const rect = buttonRef.getBoundingClientRect();
+        setPosition({
+          top: rect.bottom + window.scrollY + 8,
+          left: rect.left + window.scrollX - 130,
+        });
+      }
 
-    if (activeFilter === label) {
-      setActiveFilter(null);
-      return;
-    }
+      if (activeFilter === label) {
+        setActiveFilter(null);
+        return;
+      }
 
-    if (label === 'исполнителю') {
-      setValues(getUniqueValueByKey(data, 'author'));
-    } else if (label === 'жанру') {
-      setValues(getUniqueValueByKey(data, 'genre'));
-    } else if (label === 'году выпуска') {
-      setValues(['По умолчанию', 'Сначала новые', 'Сначала старые']);
-    }
+      if (label === 'исполнителю') {
+        setValues(getUniqueValueByKey(data, 'author'));
+      } else if (label === 'жанру') {
+        setValues(getUniqueValueByKey(data, 'genre'));
+      } else if (label === 'году выпуска') {
+        setValues(['По умолчанию', 'Сначала новые', 'Сначала старые']);
+      }
 
-    setActiveFilter(label);
-  };
+      setActiveFilter(label);
+    },
+    [activeFilter, data],
+  );
 
-  const handleSelect = (value: string) => {
-    setSelectedValue((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
-    );
+  const handleSelect = useCallback(
+    (value: string) => {
+      setSelectedValue((prev) =>
+        prev.includes(value)
+          ? prev.filter((v) => v !== value)
+          : [...prev, value],
+      );
 
-    if (activeFilter === 'исполнителю') {
-      dispatch(setFilterAuthors(value));
-    } else if (activeFilter === 'жанру') {
-      dispatch(setFilterGenres(value));
-    } else if (activeFilter === 'году выпуска') {
-      dispatch(setFilterYears(value));
-      setSelectedValue([value]);
-    }
-  };
+      if (activeFilter === 'исполнителю') {
+        dispatch(setFilterAuthors(value));
+      } else if (activeFilter === 'жанру') {
+        dispatch(setFilterGenres(value));
+      } else if (activeFilter === 'году выпуска') {
+        dispatch(setFilterYears(value));
+        setSelectedValue([value]);
+      }
+    },
+    [activeFilter, dispatch],
+  );
   useEffect(() => {
     if (!isLoading && !errorRes) {
       dispatch(setPagePlaylist(data));

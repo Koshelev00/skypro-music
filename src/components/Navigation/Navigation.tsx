@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './navigation.module.css';
 import BurgerButton from '@/components/BurgerButton/BurgerButton';
 import { useAppSelector, useAppDispatch } from '@/store/store';
@@ -13,9 +13,8 @@ export default function Navigation() {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+
   const handleLogout = () => {
     if (isAuth) {
       dispatch(clearUser());

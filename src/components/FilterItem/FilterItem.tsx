@@ -1,5 +1,5 @@
 'use client';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import styles from './filteritem.module.css';
 
 type FilterItemProps = {
@@ -17,9 +17,10 @@ export default function FilterItem({
 }: FilterItemProps) {
   const buttonRef = useRef<HTMLDivElement | null>(null);
 
-  const handleClick = () => {
-    onClick(label, buttonRef.current);
-  };
+  const handleClick = useCallback(
+    () => onClick(label, buttonRef.current),
+    [label, onClick],
+  );
 
   return (
     <>

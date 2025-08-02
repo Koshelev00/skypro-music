@@ -11,6 +11,7 @@ import {
 } from '@/store/features/trackSlice';
 import classNames from 'classnames';
 import { useLikeTrack } from '@/app/hooks/useLikeTracks';
+import { useCallback } from 'react';
 
 type TrackProps = {
   track: TrackType;
@@ -18,16 +19,23 @@ type TrackProps = {
 };
 export default function Track({ track, playlist }: TrackProps) {
   const dispatch = useAppDispatch();
-  const onClickTrack = () => {
+  const onClickTrack = useCallback(() => {
     dispatch(setCurrentTrack(track));
     dispatch(setIsPlay(true));
     dispatch(setCurrentPlaylist(playlist || []));
-  };
+  }, [dispatch, track, playlist]);
   const isPlay = useAppSelector((state) => state.tracks.isPlay);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const currentTrack = useAppSelector((state) => state.tracks.currentTrack);
   const isCurrent = currentTrack?._id === track._id;
   const { isLike, isLoading, toggleLike } = useLikeTrack(track);
+  const handleLikeClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      toggleLike();
+    },
+    [toggleLike],
+  );
 
   return (
     <div
@@ -83,10 +91,7 @@ export default function Track({ track, playlist }: TrackProps) {
               className={classNames(styles.track__timeSvg, {
                 [styles.track__timeSvg_loading]: isLoading,
               })}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleLike();
-              }}
+              onClick={handleLikeClick}
             >
               <use
                 xlinkHref={

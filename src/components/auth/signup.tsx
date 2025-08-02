@@ -1,6 +1,6 @@
 'use client';
 import styles from './signup.module.css';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
@@ -19,27 +19,29 @@ export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError('');
+      setIsLoading(true);
+      try {
+        const user = await signUp(formData);
 
-    try {
-      const user = await signUp(formData);
-
-      if (user) {
-        router.push('/SignIn');
+        if (user) {
+          router.push('/SignIn');
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message || 'Что-то пошло не так');
+        }
       }
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message || 'Что-то пошло не так');
-      }
-    }
-  };
+    },
+    [formData, router],
+  );
   return (
     <div className={styles.wrapper}>
       <div className={styles.containerEnter}>

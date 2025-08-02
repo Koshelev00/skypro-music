@@ -1,5 +1,4 @@
 'use client';
-
 import styles from './signin.module.css';
 import { useDispatch } from 'react-redux';
 import {
@@ -13,7 +12,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getTokens, signIn } from '@/services/auth';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Signin() {
@@ -22,35 +21,36 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }, []);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError('');
+      setIsLoading(true);
+      try {
+        const user = await signIn(formData);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
-    try {
-      const user = await signIn(formData);
-
-      if (user) {
-        const tokens = await getTokens(formData);
-        console.log(tokens);
-        dispatch(setAccessToken(tokens.access));
-        dispatch(setRefreshToken(tokens.refresh));
-        dispatch(setUser(user));
-        dispatch(setUserName(user.username));
-        dispatch(setIsAuth(true));
-        router.push('/music/main');
+        if (user) {
+          const tokens = await getTokens(formData);
+          dispatch(setAccessToken(tokens.access));
+          dispatch(setRefreshToken(tokens.refresh));
+          dispatch(setUser(user));
+          dispatch(setUserName(user.username));
+          dispatch(setIsAuth(true));
+          router.push('/music/main');
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message || 'Что-то пошло не так');
+        }
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message || 'Что-то пошло не так');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [formData, dispatch, router],
+  );
 
   return (
     <div className={styles.wrapper}>
