@@ -1,4 +1,3 @@
-
 'use client';
 import styles from './filter.module.css';
 
@@ -26,18 +25,19 @@ export default function FilterModal({
         left: position.left,
       }}
     >
-        <div className={styles.scroll}>
-      {values.map((value) => (
-        <div
-          key={value}
-          className={value === selectedValue ? styles.activeItem : styles.item}
-          onClick={() => onSelect(value)}
-        >
-          {value}
-        </div>
-      ))}
+      <div className={styles.scroll}>
+        {values.map((value) => (
+          <div
+            key={value}
+            className={
+              value === selectedValue ? styles.activeItem : styles.item
+            }
+            onClick={() => onSelect(value)}
+          >
+            {value}
+          </div>
+        ))}
       </div>
     </div>
   );
 }
-
