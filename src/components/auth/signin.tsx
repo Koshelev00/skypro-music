@@ -2,13 +2,20 @@
 
 import styles from './signin.module.css';
 import { useDispatch } from 'react-redux';
-import { setUser } from '@/store/features/authSlice';
+import {
+  setAccessToken,
+  setRefreshToken,
+  setUser,
+  setUserName,
+  setIsAuth,
+} from '@/store/features/authSlice';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Image from 'next/image';
-import { signIn } from '@/services/auth';
+import { getTokens, signIn } from '@/services/auth';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+
 export default function Signin() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
@@ -27,7 +34,13 @@ export default function Signin() {
       const user = await signIn(formData);
 
       if (user) {
+        const tokens = await getTokens(formData);
+        console.log(tokens);
+        dispatch(setAccessToken(tokens.access));
+        dispatch(setRefreshToken(tokens.refresh));
         dispatch(setUser(user));
+        dispatch(setUserName(user.username));
+        dispatch(setIsAuth(true))
         router.push('/music/main');
       }
     } catch (err) {
@@ -43,55 +56,56 @@ export default function Signin() {
     <div className={styles.wrapper}>
       <div className={styles.containerEnter}>
         <div className={styles.modal__block}>
-          <form className={styles.modal__form} onSubmit={handleSubmit}>
-            <Link href="/music/main">
-              <div className={styles.modal__logo}>
-                <Image
-                  src="/logo_modal.png"
-                  alt="logo"
-                  width={140}
-                  height={21}
-                />
-              </div>
-            </Link>
+    <form className={styles.modal__form} onSubmit={handleSubmit}>
+        <Link href="/music/main">
+          <div className={styles.modal__logo}>
+            <Image
+              src="/logo_modal.png"
+              alt="logo"
+              width={140}
+              height={21}
+            />
+          </div>
+        </Link>
 
-            <input
-              className={classNames(styles.modal__input)}
-              type="email"
-              name="email"
-              placeholder="Почта"
-              value={formData.email}
-              onChange={handleChange}
-              autoComplete="current-email"
-              required
-            />
-            <input
-              className={classNames(styles.modal__input)}
-              type="password"
-              name="password"
-              placeholder="Пароль"
-              value={formData.password}
-              onChange={handleChange}
-              autoComplete="current-password"
-              required
-              minLength={6}
-            />
-            <div className={styles.errorContainer}>
-              {error && <span className={styles.errorText}>{error}</span>}
-            </div>
-            <button
-              disabled={isLoading}
-              className={styles.modal__btnEnter}
-              type="submit"
-            >
-              Войти
-            </button>
-            <Link href={'/SignUp'} className={styles.modal__btnSignup}>
-              Зарегистрироваться
-            </Link>
-          </form>
+        <input
+          className={classNames(styles.modal__input, styles.login)}
+          type="text"
+          name="email"
+          placeholder="Почта"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="current-email"
+          required
+        />
+        <input
+          className={classNames(styles.modal__input)}
+          type="password"
+          name="password"
+          placeholder="Пароль"
+          value={formData.password}
+          onChange={handleChange}
+          autoComplete="current-password"
+          required
+          minLength={6}
+        />
+        <div className={styles.errorContainer}>
+          {error && <span className={styles.errorText}>{error}</span>}
         </div>
-      </div>
+        <button
+          disabled={isLoading}
+          className={styles.modal__btnEnter}
+          type="submit"
+        >
+          Войти
+        </button>
+        <Link href={'/SignUp'} className={styles.modal__btnSignup}>
+          Зарегистрироваться
+        </Link>
+      </form>
     </div>
+    </div>
+    </div>
+    
   );
 }

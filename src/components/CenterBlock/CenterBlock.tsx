@@ -22,6 +22,7 @@ export default function Centerblock({
   isLoading,
   errorRes,
 }: TrackDataProps) {
+
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [position, setPosition] = useState<{ top: number; left: number }>({
@@ -42,11 +43,13 @@ export default function Centerblock({
       });
     }
 
+    
     if (activeFilter === label) {
       setActiveFilter(null);
       return;
     }
 
+    
     if (label === 'исполнителю') {
       setValues(getUniqueValueByKey(data, 'author'));
     } else if (label === 'жанру') {
@@ -65,7 +68,6 @@ export default function Centerblock({
 
   return (
     <div className={styles.centerblock}>
-      <Search />
       <h2 className={styles.centerblock__h2}>{title}</h2>
       <div className={styles.centerblock__filter}>
         <div className={styles.filter__title}>Искать по:</div>

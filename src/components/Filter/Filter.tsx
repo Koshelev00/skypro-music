@@ -13,14 +13,12 @@ export default function FilterModal({
   values,
   selectedValue,
   onSelect,
-  onClose,
   position,
 }: FilterModalProps) {
   return (
     <div
       className={styles.modal}
       style={{
-        position: 'fixed',
         top: position.top,
         left: position.left,
       }}

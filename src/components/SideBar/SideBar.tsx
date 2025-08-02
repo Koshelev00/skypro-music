@@ -1,24 +1,40 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './sidebar.module.css';
-import { useAppSelector } from '@/store/store';
-import { useLogout } from '@/app/hooks/useAuth';
+import { useAppSelector, useAppDispatch } from '@/store/store';
+import { clearUser,setIsAuth } from '@/store/features/authSlice';
+import { setFavoriteTracks } from '@/store/features/trackSlice';
 
-export default function SideBar() {
-  const user = useAppSelector((state) => state.auth.user);
-  const handleLogout = useLogout();
+export default function Sidebar() {
+  const isAuth = useAppSelector((state) => state.auth.isAuth)
+  const username = useAppSelector((state) => state.auth.username);
+  const router = useRouter();
+  const displayName = isAuth? username || '' : 'Гость';
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
   
-  const displayName = user?.username;
-  
+    if (isAuth) {
+      dispatch(clearUser());
+      dispatch(setIsAuth(false))
+      dispatch(setFavoriteTracks([]))
+      router.push('/music/main');
+    } else {
+
+      router.push('/SignIn');
+    }
+ 
+  };
   return (
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
-        <p className={styles.sidebar__personalName}>{user ? displayName : 'Гость'}</p>
+        <p className={styles.sidebar__personalName}>{displayName}</p>
         <div className={styles.sidebar__icon} onClick={handleLogout}>
           <svg>
-            <use xlinkHref={user ? '/icon/sprite.svg#logout' : '/icon/sprite.svg#login'}></use>
+             <use xlinkHref={isAuth ? '/icon/sprite.svg#logout' : '/icon/sprite.svg#login'}></use>
           </svg>
         </div>
       </div>
