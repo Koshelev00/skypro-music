@@ -54,8 +54,6 @@
 }
 
 .modal__logo {
-  width: 140px;
-  height: 21px;
   margin-bottom: 34px;
   background-color: transparent;
 }
@@ -133,9 +131,11 @@
   font-size: 18px;
   font-weight: 400;
   letter-spacing: -0.05px;
+  cursor: pointer;
 }
 
 .errorContainer {
+  padding-top: 6px;
   display: flex;
   flex-direction: column;
   gap: 5px;

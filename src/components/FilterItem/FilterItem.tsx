@@ -30,8 +30,6 @@ export default function FilterItem({
           onClick={handleClick}
         >
           {label}
-          {/* {typeof count === 'number' && (
-      <div className={styles.count}>{count}</div>)} */}
         </div>
       </div>
     </>

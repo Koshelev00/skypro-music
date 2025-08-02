@@ -4,25 +4,30 @@ import styles from './navigation.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
 import BurgerButton from '@/components/BurgerButton/BurgerButton';
+import { useLogout } from '@/app/hooks/useAuth';
+import { useAppSelector } from '@/store/store';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const handleLogout = useLogout();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <nav className={styles.main__nav}>
       <div className={styles.nav__logo}>
-        {/*TODO: img –> Image*/}
-        <Image
-          width={113}
-          height={17}
-          className={styles.logo__image}
-          src="/logo.png"
-          alt={'logo'}
-        />
+        <Link href="/music/main" className={styles.menu__link}>
+          <Image
+            width={113}
+            height={17}
+            className={styles.logo__image}
+            src="/logo.png"
+            alt={'logo'}
+          />
+        </Link>
       </div>
 
       <BurgerButton isOpen={menuOpen} toggle={toggleMenu} />
@@ -34,20 +39,19 @@ export default function Navigation() {
       >
         <ul className={styles.menu__list}>
           <li className={styles.menu__item}>
-            {/*TODO: a -> Link*/}
-            <Link href="#" className={styles.menu__link}>
+            <Link href="/music/main" className={styles.menu__link}>
               Главное
             </Link>
           </li>
           <li className={styles.menu__item}>
             <Link href="#" className={styles.menu__link}>
-              Мой плейлист
+              Мои треки
             </Link>
           </li>
-          <li className={styles.menu__item}>
-            <Link href="/SignIn" className={styles.menu__link}>
-              Выйти
-            </Link>
+          <li className={styles.menu__item} onClick={handleLogout}>
+           <div className={styles.menu__link}>
+             {user ? 'Выйти' : 'Войти'}
+            </div>
           </li>
         </ul>
       </div>
