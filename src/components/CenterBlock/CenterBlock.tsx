@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Track from '../Track/Track';
 import FilterItem from '../FilterItem/FilterItem';
 import FilterModal from '../Filter/Filter';
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
 import { getUniqueValueByKey } from '@/utils/helper';
 import Skeleton from '../SkeletonTrack/SkeletonTrack';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -94,6 +94,7 @@ export default function Centerblock({
   return (
     <>
       <h2 className={styles.centerblock__h2}>{title}</h2>
+
       <div className={styles.centerblock__filter}>
         <div className={styles.filter__title}>Искать по:</div>
         <FilterItem

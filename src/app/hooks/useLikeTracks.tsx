@@ -1,4 +1,4 @@
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { AxiosError } from 'axios';
 import { useState } from 'react';

@@ -1,4 +1,4 @@
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
 
 export function applySearch(
   tracks: TrackType[],

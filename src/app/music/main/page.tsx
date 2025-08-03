@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Centerblock from '@/components/CenterBlock/CenterBlock';
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
 import { useAppSelector } from '@/store/store';
 import { applySearch } from '@/utils/applySearch';
 export default function Home() {

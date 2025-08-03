@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Centerblock from '@/components/CenterBlock/CenterBlock';
 import { useAppSelector, useAppDispatch } from '@/store/store';
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
 import { setPagePlaylist } from '@/store/features/trackSlice';
 import { applySearch } from '@/utils/applySearch';
 export default function MyPlaylist() {

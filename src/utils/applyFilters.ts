@@ -1,4 +1,4 @@
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
 import { initialStateType } from '@/store/features/trackSlice';
 export const applyFilters = (state: initialStateType): TrackType[] => {
   let filteredPlaylist = state.pagePlayList;

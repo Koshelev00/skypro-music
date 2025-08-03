@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '@/constants';
-import { TrackType, TrackSetType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType, TrackSetType } from '@/sharedTypes/sharedTypes';
 
 export const getTracks = (): Promise<TrackType[]> => {
   return axios(BASE_URL + '/catalog/track/all/').then((res) => {
