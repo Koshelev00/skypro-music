@@ -1,6 +1,6 @@
 'use client';
 import { useRef, useCallback } from 'react';
-import styles from './filteritem.module.css';
+import styles from './filterItem.module.css';
 
 type FilterItemProps = {
   label: string;

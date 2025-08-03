@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import styles from './sidebar.module.css';
+import styles from './Sidebar.module.css';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { clearUser, setIsAuth } from '@/store/features/authSlice';
 import { setFavoriteTracks } from '@/store/features/trackSlice';
