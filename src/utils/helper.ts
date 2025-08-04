@@ -1,4 +1,4 @@
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
 import { current } from '@reduxjs/toolkit';
 
 export function formatTime(time: number) {

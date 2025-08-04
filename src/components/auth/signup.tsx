@@ -1,11 +1,13 @@
 'use client';
 import styles from './signup.module.css';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import Image from 'next/image';
 import { signUp } from '@/services/auth';
 import { useRouter } from 'next/navigation';
+import { setUser, setIsAuth } from '@/store/features/authSlice';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -16,33 +18,36 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const dispatch = useDispatch();
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setError('');
+      setIsLoading(true);
+      try {
+        const user = await signUp(formData);
 
-    try {
-      const user = await signUp(formData);
-
-      if (user) {
-        router.push('/SignIn');
+        if (user) {
+          router.push('/SignIn');
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message || 'Что-то пошло не так');
+        }
       }
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message || 'Что-то пошло не так');
-      }
-    }
-  };
+    },
+    [formData, router],
+  );
   return (
     <div className={styles.wrapper}>
       <div className={styles.containerEnter}>
         <div className={styles.modal__block}>
           <form className={styles.modal__form} onSubmit={handleSubmit}>
-            <Link href="/SignIn">
+            <Link href="/music/main">
               <div className={styles.modal__logo}>
                 <Image
                   src="/logo_modal.png"

@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { getTracksByIds } from '@/utils/helper';
 import { useState, useEffect } from 'react';
 import { getTrackSet } from '@/services/tracksApi';
-import { TrackType, TrackSetType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType, TrackSetType } from '@/sharedTypes/sharedTypes';
 import { AxiosError } from 'axios';
 import { useAppSelector } from '@/store/store';
 import styles from '../../layout.module.css';

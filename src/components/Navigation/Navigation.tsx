@@ -1,29 +1,44 @@
 'use client';
 import Image from 'next/image';
-import styles from './navigation.module.css';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import styles from './navigation.module.css';
 import BurgerButton from '@/components/BurgerButton/BurgerButton';
-import { useLogout } from '@/app/hooks/useAuth';
-import { useAppSelector } from '@/store/store';
+import { useAppSelector, useAppDispatch } from '@/store/store';
+import { clearUser, setIsAuth } from '@/store/features/authSlice';
+import { useRouter } from 'next/navigation';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const handleLogout = useLogout();
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
 
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
+  const handleLogout = () => {
+    if (isAuth) {
+      dispatch(clearUser());
+      dispatch(setIsAuth(false));
+      router.push('/music/main');
+    } else {
+      router.push('/SignIn');
+    }
   };
-  const user = useAppSelector((state) => state.auth.user);
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    if (username) {
+      dispatch(setIsAuth(true));
+    }
+  }, [dispatch]);
 
   return (
     <nav className={styles.main__nav}>
       <div className={styles.nav__logo}>
-        <Link href="/music/main" className={styles.menu__link}>
+        <Link href="/music/main">
           <Image
             width={113}
             height={17}
-            className={styles.logo__image}
+            className={'logo__image'}
             src="/logo.png"
             alt={'logo'}
           />
@@ -44,13 +59,16 @@ export default function Navigation() {
             </Link>
           </li>
           <li className={styles.menu__item}>
-            <Link href="#" className={styles.menu__link}>
+            <Link
+              href={isAuth ? '/music/favorite' : '/SignIn'}
+              className={styles.menu__link}
+            >
               Мои треки
             </Link>
           </li>
           <li className={styles.menu__item} onClick={handleLogout}>
-           <div className={styles.menu__link}>
-             {user ? 'Выйти' : 'Войти'}
+            <div className={styles.menu__link}>
+              {isAuth ? 'Выйти' : 'Войти'}
             </div>
           </li>
         </ul>

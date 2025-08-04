@@ -21,5 +21,5 @@ export type TrackSetType = {
 export type UserType = {
   email: string;
   username: string;
-  _id: number | string;
+  _id: number;
 };

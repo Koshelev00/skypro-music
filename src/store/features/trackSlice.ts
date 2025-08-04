@@ -1,15 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TrackType } from '@/app/sharedTypes/sharedTypes';
+import { TrackType } from '@/sharedTypes/sharedTypes';
+import { applyFilters } from '@/utils/applyFilters';
 
-type initialStateType = {
+export type initialStateType = {
   currentTrack: TrackType | null;
   isPlay: boolean;
   isShuffle: boolean;
   playlist: TrackType[];
   shuffledPlaylist: TrackType[];
   allTracks: TrackType[];
+  favoriteTracks: TrackType[];
   fetchError: null | string;
   fetchIsLoading: boolean;
+  filters: {
+    authors: string[];
+    genres: string[];
+    years: string;
+  };
+  pagePlayList: TrackType[];
+  filteredTracks: TrackType[];
+  searchQuery: string;
 };
 
 const initialState: initialStateType = {
@@ -19,8 +29,17 @@ const initialState: initialStateType = {
   playlist: [],
   shuffledPlaylist: [],
   allTracks: [],
+  favoriteTracks: [],
   fetchError: null,
   fetchIsLoading: true,
+  filters: {
+    authors: [],
+    genres: [],
+    years: 'По умолчанию',
+  },
+  pagePlayList: [],
+  filteredTracks: [],
+  searchQuery: '',
 };
 
 const trackSlice = createSlice({
@@ -50,8 +69,10 @@ const trackSlice = createSlice({
       const curIndex = playlist.findIndex(
         (el) => el._id === state.currentTrack?._id,
       );
-      const nextIndex = (curIndex + 1) % playlist.length;
-      state.currentTrack = playlist[nextIndex];
+      if (curIndex < playlist.length - 1) {
+        const nextIndexTrack = curIndex + 1;
+        state.currentTrack = playlist[nextIndexTrack];
+      }
     },
     setPrevTrack: (state) => {
       const playlist = state.isShuffle
@@ -61,12 +82,25 @@ const trackSlice = createSlice({
       const curIndex = playlist.findIndex(
         (el) => el._id === state.currentTrack?._id,
       );
-      const prevIndex = (curIndex - 1 + playlist.length) % playlist.length;
-      state.currentTrack = playlist[prevIndex];
+      if (curIndex > 0) {
+        const nextIndexTrack = curIndex - 1;
+        state.currentTrack = playlist[nextIndexTrack];
+      }
     },
 
     setAllTracks: (state, action: PayloadAction<TrackType[]>) => {
       state.allTracks = action.payload;
+    },
+    setFavoriteTracks: (state, action: PayloadAction<TrackType[]>) => {
+      state.favoriteTracks = action.payload;
+    },
+    addLikedTracks: (state, action: PayloadAction<TrackType>) => {
+      state.favoriteTracks = [...state.favoriteTracks, action.payload];
+    },
+    removeLikedTracks: (state, action: PayloadAction<TrackType>) => {
+      state.favoriteTracks = state.favoriteTracks.filter(
+        (track) => track._id !== action.payload._id,
+      );
     },
     setFetchError: (state, action: PayloadAction<string>) => {
       state.fetchError = action.payload;
@@ -74,11 +108,40 @@ const trackSlice = createSlice({
     setFetchIsLoading: (state, action: PayloadAction<boolean>) => {
       state.fetchIsLoading = action.payload;
     },
-    clearPlayer(state) {
-      state.currentTrack = null;
-      state.isPlay = false;
-      state.playlist = [];
-      state.shuffledPlaylist = [];
+    setPagePlaylist: (state, action: PayloadAction<TrackType[]>) => {
+      state.pagePlayList = action.payload;
+      state.filteredTracks = applyFilters(state);
+    },
+    setFilterAuthors: (state, action: PayloadAction<string>) => {
+      const author = action.payload;
+      if (state.filters.authors.includes(author)) {
+        state.filters.authors = state.filters.authors.filter((el) => {
+          return el !== author;
+        });
+      } else {
+        state.filters.authors = [...state.filters.authors, author];
+      }
+
+      state.filteredTracks = applyFilters(state);
+    },
+    setFilterGenres: (state, action: PayloadAction<string>) => {
+      const genres = action.payload;
+      if (state.filters.genres.includes(genres)) {
+        state.filters.genres = state.filters.genres.filter((el) => {
+          return el !== genres;
+        });
+      } else {
+        state.filters.genres = [...state.filters.genres, genres];
+      }
+
+      state.filteredTracks = applyFilters(state);
+    },
+    setFilterYears: (state, action: PayloadAction<string>) => {
+      state.filters.years = action.payload;
+      state.filteredTracks = applyFilters(state);
+    },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
     },
   },
 });
@@ -93,7 +156,13 @@ export const {
   setFetchIsLoading,
   setFetchError,
   setAllTracks,
-  clearPlayer,
+  setFavoriteTracks,
+  addLikedTracks,
+  removeLikedTracks,
+  setFilterAuthors,
+  setPagePlaylist,
+  setFilterGenres,
+  setFilterYears,
+  setSearchQuery,
 } = trackSlice.actions;
-
 export const trackSliceReducer = trackSlice.reducer;

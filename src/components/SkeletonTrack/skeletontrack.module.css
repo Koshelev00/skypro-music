@@ -1,5 +1,5 @@
 .playlist__item {
-  width: 100%;
+  width: auto;
   display: block;
   margin-bottom: 12px;
 }
@@ -8,17 +8,17 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  gap: 15px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: left;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 1;
 }
 
 .track__title {
@@ -52,49 +52,12 @@
   margin-right: 17px;
 }
 
-.track__titleSvg {
-  width: 18px;
-  height: 17px;
-  fill: transparent;
-  stroke: #4e4e4e;
-}
-.track_active {
-  fill: #b672ff;
-}
-
-.animate {
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 .track__titleLink {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-}
-
-.track__titleSpan {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #4e4e4e;
 }
 
 .track__author {
@@ -107,41 +70,6 @@
   justify-content: flex-start;
 }
 
-.track__authorLink {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-  text-align: left;
-}
-
 .track__album {
   width: 245px;
-}
-
-.track__albumLink {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #696969;
-}
-
-.track__timeSvg {
-  width: 14px;
-  height: 12px;
-  margin-right: 17px;
-  fill: transparent;
-  stroke: #696969;
-  cursor: pointer;
-}
-
-.track__timeText {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  text-align: right;
-  color: #696969;
 }
