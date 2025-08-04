@@ -1,5 +1,4 @@
 import styles from './skeletontrack.module.css';
-import Image from 'next/image';
 
 export default function Skeleton() {
   return (
@@ -7,37 +6,29 @@ export default function Skeleton() {
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
-            <Image
-              alt="Song"
-              src={'/icon/skeleton/song_name.png'}
-              width={51}
-              height={51}
-            ></Image>
+            <div
+              className={`${styles.skeleton}`}
+              style={{ width: 51, height: 51 }}
+            />
           </div>
           <div className={styles.track__titleLink}>
-            <Image
-              alt="Song"
-              src={'/icon/skeleton/song_name.png'}
-              width={306}
-              height={19}
-            ></Image>
+            <div
+              className={`${styles.skeleton}`}
+              style={{ width: 306, height: 19 }}
+            />
           </div>
         </div>
         <div className={styles.track__author}>
-          <Image
-            alt="Author"
-            src={'/icon/skeleton/song_author.png'}
-            width={251}
-            height={19}
-          ></Image>
+          <div
+            className={`${styles.skeleton}`}
+            style={{ width: 251, height: 19 }}
+          />
         </div>
         <div className={styles.track__album}>
-          <Image
-            alt="Album"
-            src={'/icon/skeleton/album.png'}
-            width={256}
-            height={19}
-          ></Image>
+          <div
+            className={`${styles.skeleton}`}
+            style={{ width: 256, height: 19 }}
+          />
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@
   margin: 0 auto;
   position: relative;
   background-color: #181818;
+  padding-top: 20px;
 }
 .main {
   -webkit-box-flex: 1;

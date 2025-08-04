@@ -7,6 +7,7 @@ import styles from './Sidebar.module.css';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { clearUser, setIsAuth } from '@/store/features/authSlice';
 import { setFavoriteTracks } from '@/store/features/trackSlice';
+import { useState, useEffect } from 'react';
 
 export default function Sidebar() {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -14,6 +15,7 @@ export default function Sidebar() {
   const router = useRouter();
   const displayName = isAuth ? username || '' : 'Гость';
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleLogout = () => {
     if (isAuth) {
@@ -25,10 +27,25 @@ export default function Sidebar() {
       router.push('/SignIn');
     }
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
-        <p className={styles.sidebar__personalName}>{displayName}</p>
+        {isLoading ? (
+          <div
+            className={`${styles.skeleton} ${styles.skeletonName}`}
+            style={{ width: 120, height: 24 }}
+          />
+        ) : (
+          <p className={styles.sidebar__personalName}>{displayName}</p>
+        )}
         <div className={styles.sidebar__icon} onClick={handleLogout}>
           <svg>
             <use
