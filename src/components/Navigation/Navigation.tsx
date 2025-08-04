@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect, useCallback, useRef } from 'react'; 
+import { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './navigation.module.css';
 import BurgerButton from '@/components/BurgerButton/BurgerButton';
 import { useAppSelector, useAppDispatch } from '@/store/store';
@@ -22,34 +22,33 @@ export default function Navigation() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        menuRef.current && 
+        menuRef.current &&
         burgerRef.current &&
         !menuRef.current.contains(event.target as Node) &&
         !burgerRef.current.contains(event.target as Node)
       ) {
         setMenuOpen(false);
       }
-    }
+    };
     if (menuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-    
-  
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [menuOpen]);
 
   const handleLogout = () => {
-      if (isAuth) {
-        dispatch(clearUser());
-        dispatch(setIsAuth(false));
-        dispatch(setFavoriteTracks([]));
-        router.push('/music/main');
-      } else {
-        router.push('/SignIn');
-      }
-    };
+    if (isAuth) {
+      dispatch(clearUser());
+      dispatch(setIsAuth(false));
+      dispatch(setFavoriteTracks([]));
+      router.push('/music/main');
+    } else {
+      router.push('/SignIn');
+    }
+  };
 
   useEffect(() => {
     const username = localStorage.getItem('username');
@@ -71,7 +70,7 @@ export default function Navigation() {
           />
         </Link>
       </div>
-       <div ref={burgerRef}>
+      <div ref={burgerRef}>
         <BurgerButton isOpen={menuOpen} toggle={toggleMenu} />
       </div>
       <div
@@ -104,4 +103,3 @@ export default function Navigation() {
     </nav>
   );
 }
-
