@@ -37,7 +37,7 @@ export default function Bar() {
   useEffect(() => {
     const audio = audioRef.current;
 
-    if (!audio || !currentTrack) return; // Add null check
+    if (!audio || !currentTrack) return;
 
     if (isPlay) {
       audio.play().catch((err) => console.warn('Autoplay error:', err));
@@ -48,7 +48,6 @@ export default function Bar() {
 
   const playTrack = useCallback(() => {
     if (audioRef.current && currentTrack) {
-      // Add null check
       audioRef.current.play();
       dispatch(setIsPlay(true));
     }
