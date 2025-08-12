@@ -73,3 +73,19 @@
 .track__album {
   width: 245px;
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #313131 0%, #414141 50%, #313131 100%);
+  background-size: 1000px 100%;
+  border-radius: 4px;
+}

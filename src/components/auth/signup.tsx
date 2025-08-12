@@ -7,7 +7,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { signUp } from '@/services/auth';
 import { useRouter } from 'next/navigation';
-import { setUser, setIsAuth } from '@/store/features/authSlice';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({

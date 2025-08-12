@@ -1,6 +1,6 @@
 .main__sidebar {
   max-width: 418px;
-  padding: 20px 90px 20px 78px;
+  padding: 0px 90px 20px 78px;
 }
 .sidebar__personal {
   display: -webkit-box;
@@ -16,7 +16,7 @@
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  padding: 12px 0 15px 0;
+  padding: 16px 0 15px 0;
 }
 
 .sidebar__personalName {
@@ -38,7 +38,7 @@
 
 .sidebar__block {
   height: 100%;
-  padding: 240px 0 0 0;
+  padding: 336px 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,4 +76,21 @@
 .sidebar__link {
   width: 100%;
   height: 100%;
+}
+
+.skeleton {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #313131 0%, #414141 50%, #313131 100%);
+  background-size: 1000px 100%;
+  border-radius: 4px;
+  color: transparent !important;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
 }
