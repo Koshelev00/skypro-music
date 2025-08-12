@@ -29,6 +29,9 @@ export default function Centerblock({
   isLoading,
   errorRes,
 }: TrackDataProps) {
+  const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [selectedYear, setSelectedYear] = useState<string[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const filteredTracks = useAppSelector((state) => state.tracks.filteredTracks);
   const [selectedValue, setSelectedValue] = useState<string[]>([]);
@@ -76,11 +79,21 @@ export default function Centerblock({
       );
 
       if (activeFilter === 'исполнителю') {
+        setSelectedAuthors((prev) =>
+          prev.includes(value)
+            ? prev.filter((v) => v !== value)
+            : [...prev, value],
+        );
         dispatch(setFilterAuthors(value));
       } else if (activeFilter === 'жанру') {
+        setSelectedGenres((prev) =>
+          prev.includes(value)
+            ? prev.filter((v) => v !== value)
+            : [...prev, value],
+        );
         dispatch(setFilterGenres(value));
       } else if (activeFilter === 'году выпуска') {
-        dispatch(setFilterYears(value));
+        setSelectedYear((prev) => (prev.includes(value) ? [] : [value]));
         setSelectedValue([value]);
       }
     },
@@ -91,6 +104,7 @@ export default function Centerblock({
       dispatch(setPagePlaylist(data));
     }
   }, [isLoading, errorRes]);
+
   return (
     <>
       <h2 className={styles.centerblock__h2}>{title}</h2>
@@ -100,27 +114,20 @@ export default function Centerblock({
         <FilterItem
           label="исполнителю"
           isActive={activeFilter === 'исполнителю'}
-          count={
-            activeFilter === 'исполнителю'
-              ? getUniqueValueByKey(filteredTracks, 'author').length
-              : undefined
-          }
+          count={selectedAuthors.length}
           onClick={handleFilterClick}
         />
         <FilterItem
           label="году выпуска"
           isActive={activeFilter === 'году выпуска'}
           onClick={handleFilterClick}
+          count={selectedYear.length}
         />
         <FilterItem
           label="жанру"
           isActive={activeFilter === 'жанру'}
           onClick={handleFilterClick}
-          count={
-            activeFilter === 'жанру'
-              ? getUniqueValueByKey(filteredTracks, 'genre').length
-              : undefined
-          }
+          count={selectedGenres.length}
         />
       </div>
 
